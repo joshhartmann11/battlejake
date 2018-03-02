@@ -38,12 +38,12 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
+    print data
 
     # TODO: Do things with data
     
     directions = ['up', 'down', 'left', 'right']
     direction = random.choice(directions)
-    print direction
     return {
         'move': 'up',
         'taunt': 'battlesnake-python!'
