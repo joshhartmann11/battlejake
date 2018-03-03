@@ -159,11 +159,14 @@ def kill_others(head, mySize, heads, size, moves):
 
 	# If you're bigger than other, kill them
 	for i, h in enumerate(heads):
-		print 'killing'
 		if(size[i] < mySize):
-			xdist = h[0]-head[0]
-			ydist = h[1]-head[1]
+			xdist = head[0]-h[0]
+			ydist = head[1]-h[0]
+						
+			#xdist = h[0]-head[0]
+			#ydist = h[1]-head[1]
 			if(abs(xdist) == 1 and abs(ydist) == 1):
+				print 'killing 1,1'
 				# Which move would put you further from his head?
 				if(xdist > 0 and 'right' in moves):
 					return 'right'
@@ -177,6 +180,7 @@ def kill_others(head, mySize, heads, size, moves):
 					return None
 					
 			elif((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
+				print 'killing 2,0'
 				if(xdist == 2 and 'right' in moves):
 					return 'right'
 				elif(xdist == -2 and 'left' in moves):
