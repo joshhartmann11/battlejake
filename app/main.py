@@ -64,6 +64,8 @@ def move():
 			move = random.choice(moves)
 	else:
 		print 'Food Found!'
+		taunt = 'FF, Mvs: ' + str(moves)
+		
 	print 'move: ', move
 	print '------------------------------------------------------'
 	
@@ -87,18 +89,23 @@ def get_previous_move(head, second):
 
 
 def get_food(moves, head, food):
+	val = None
 	for f in food:
 		xdist = abs(f[0]-head[0])
 		ydist = abs(f[1]-head[1])
 		if(abs(xdist) == 1 ^ abs(ydist) == 1):
-			if(xdist == 1 and 'right' in moves):
-				return 'right'
-			elif(xdist == -1 and 'left' in moves):
-				return 'left'
-			elif(ydist == 1 and 'up' in moves):
-				return 'up'
-			elif('down' in moves):
-				return 'down'
+			if(xdist == 1):
+				val = 'right'
+			elif(xdist == -1):
+				val = 'left'
+			elif(ydist == 1):
+				val = 'up'
+			elif(ydist == -1):
+				val = 'down'
+	if val in moves:
+		return val
+	else:
+		return None
 				
 
 def get_restrictions(head, walls, snakes, heads, pm):
@@ -140,8 +147,10 @@ def get_restrictions(head, walls, snakes, heads, pm):
 					directions['down'] = 0
 				else:
 					directions['up'] = 0
-				
-	# Be scared of the heads of others
+	
+	directions2 = directions
+	
+	# OPTIONAL: Be scared of the heads of others
 	for h in heads:
 		xdist = h[0]-head[0]
 		ydist = h[1]-head[1]
@@ -164,6 +173,9 @@ def get_restrictions(head, walls, snakes, heads, pm):
 				directions['up'] = 0
 			else:
 				directions['down'] = 0
+	
+	if(1 not in directions.values()):
+		directions = directions2
 	
 	moves = [k for k in directions.keys() if directions[k] is 1]
 	
