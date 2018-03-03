@@ -152,7 +152,7 @@ def flee_wall(moves, walls, head):
 	if(head[1] == 0 and 'down' in moves):
 		return 'down'
 	elif(head[1] == walls[1]-1 and 'up' in moves):
-		return up
+		return 'up'
 
 
 def kill_others(head, mySize, heads, size, moves):
