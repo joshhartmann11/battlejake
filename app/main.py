@@ -159,6 +159,7 @@ def kill_others(head, mySize, heads, size, moves):
 
 	# If you're bigger than other, kill them
 	for i, h in enumerate(heads):
+		print 'killing'
 		if(size[i] < mySize):
 			xdist = h[0]-head[0]
 			ydist = h[1]-head[1]
@@ -253,11 +254,11 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 				else:
 					directions['up'] = 0
 	
-	directions2 = directions
+	directions2 = {key: value for key, value in directions.items()}
 	
 	# Be scared of the heads of others if they're scary
 	for i, h in enumerate(heads):
-		if( not (size[i] < mySize)):
+		if(not (size[i] < mySize)):
 			xdist = h[0]-head[0]
 			ydist = h[1]-head[1]
 			if(abs(xdist) == 1 and abs(ydist) == 1):
