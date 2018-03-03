@@ -59,7 +59,6 @@ def get_move():
 	
 	
 def add_walls(walls, head):
-	print walls
 	print head
 	
 
