@@ -240,7 +240,7 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 	
 	# Be scared of the heads of others if they're scary
 	for i, h in enumerate(heads):
-		if( not (size[i] < mySize)):
+		if( not (size[i] <= mySize)):
 			xdist = h[0]-head[0]
 			ydist = h[1]-head[1]
 			if(abs(xdist) == 1 and abs(ydist) == 1):
