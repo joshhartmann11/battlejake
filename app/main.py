@@ -76,13 +76,13 @@ def get_restrictions(head, walls, snakes):
 		directions['left'] = 0
 	
 	# Don't run into a wall
-	if(head[1] <= 1):
+	if(head[1] <= 0):
 		directions['down'] = 0
-	elif(head[1] >= (walls[1]-1)):
+	elif(head[1] >= walls[1]):
 		directions['up'] = 0
-	if(head[0] <= 1):
+	if(head[0] <= 0):
 		directions['left'] = 0
-	elif(head[0] >= (walls[0]-1)):
+	elif(head[0] >= walls[0]):
 		directions['right'] = 0
 	
 	# Don't hit other snakes
