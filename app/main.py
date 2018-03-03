@@ -106,7 +106,7 @@ def move():
 	# 					head, 	walls, 	snakes, heads, size, pm
 	if(get_restrictions(nextHead, mySize, walls, snakes, heads, size, op=False) == []):
 		if(moves != []):
-			moves.remove('move')
+			moves.remove(move)
 			move = random.choice(moves)
 		taunt = 'Fnd Trp! Mvs: ' + str(moves)
 		
@@ -187,7 +187,7 @@ def kill_others(head, mySize, heads, size, moves):
 				else:
 					return None
 
-#FIXME
+
 def starving(moves, head, food):
 	val = None
 	for f in food:
@@ -236,15 +236,6 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 	elif(head[1] == walls[1]-1):
 		directions['down'] = 0
 	
-	# Don't go back on yourself
-#	if(pm == 'right'):
-#		directions['left'] = 0
-#	elif(pm == 'left'):
-#		directions['right'] = 0
-#	elif(pm == 'up'):
-#		directions['down'] = 0
-#	elif(pm == 'down'):
-#		directions['up'] = 0
 	
 	# Don't hit other snakes
 	for s in snakes:
