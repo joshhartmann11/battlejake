@@ -47,7 +47,7 @@ def move():
 	
 	you = data.get('you')
 	health = you["health"]
-	mySize = you['size']
+	mySize = you['length']
 	body = you['body']['data']
 	head = (body[0]['x'], body[0]['y'])
 	walls = (data.get('width'), data.get('height'))
