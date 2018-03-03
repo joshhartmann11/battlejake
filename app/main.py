@@ -78,10 +78,10 @@ def move():
 	# Moving preferences
 	if(move == None):
 		move = get_food(moves, head, food)
-		taunt = 'GF, Mvs: ' + move
+		taunt = 'GF, Mvs: ' + str(move)
 	if(move == None):
 		move = flee_wall(moves, walls, head)
-		taunt = 'FW, Mvs: ' + move
+		taunt = 'FW, Mvs: ' + str(move)
 	if(move == None):
 		if(pm in moves or moves == []):
 			move = pm
