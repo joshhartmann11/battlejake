@@ -70,26 +70,24 @@ def move():
 	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
 	print "Size: ", size
 	
-	# 					head, 	walls, 	snakes, heads, size, pm
+	# Moving restrictions
 	moves = get_restrictions(head, mySize, walls, snakes, heads, size)
 	move = kill_others(head, mySize, heads, size, moves)
-	if(move == None):
-		move = get_food(moves, head, food)
-	if(move == None):
-		move = flee_wall(moves, walls, head)
-	
 	print 'moves: ', moves
 	
-	# Check to see if the snake has a preferred move
+	# Moving preferences
+	if(move == None):
+		move = get_food(moves, head, food)
+		taunt = 'GF, Mvs: ' + move
+	if(move == None):
+		move = flee_wall(moves, walls, head)
+		taunt = 'FW, Mvs: ' + move
 	if(move == None):
 		if(pm in moves or moves == []):
 			move = pm
 		else:
 			move = random.choice(moves)
 		taunt = 'Mvs: ' + str(moves)
-	else:
-		print 'Food Found!'
-		taunt = 'FF, Mvs: ' + str(moves)
 	
 	# Find the next position of the head given the move
 	nextHead = get_future_head(head, move)
