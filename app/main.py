@@ -59,7 +59,7 @@ def move():
 	snakes2 = []
 	heads = []
 	for s1 in snakes:
-		heads.append((s1[0]['x'], s1[0]['x']))
+		heads.append((s1[0]['x'], s1[0]['y']))
 		for s2 in s1:
 			snakes2.append((s2['x'], s2['y']))
 	snakes = snakes2
