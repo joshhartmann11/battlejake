@@ -40,7 +40,7 @@ def start():
 
 @bottle.post('/move')
 def move():
-	
+	taunt = 'Jake the Snake!'
 	t1 = time.clock()
 	
 	data = bottle.request.json
