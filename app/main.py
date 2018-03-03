@@ -21,7 +21,7 @@ def start():
     gameId = data.get('game_id')
     boardWidth = data.get('width')
     boardHeight = data.get('height')
-	global previousMove = 'up'
+    global previousMove = 'up'
     headUrl = '%s://%s/static/head.png' % (
         bottle.request.urlparts.scheme,
         bottle.request.urlparts.netloc
@@ -38,6 +38,9 @@ def start():
 
 @bottle.post('/move')
 def move():
+
+	global previousMove
+
     data = bottle.request.json
     you = data.get('you')
     health = you["health"]
