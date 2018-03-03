@@ -38,7 +38,8 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-    print data
+    health = data.get('health')
+    print health
 
     # TODO: Do things with data
     
