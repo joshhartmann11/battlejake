@@ -28,6 +28,9 @@ def start():
 		bottle.request.urlparts.netloc
 	)
 	
+	print '*******************************************************************\n\
+			*******************************************************************'
+	
 	return {
 		'color': '#99FFFF',
 		'taunt': 'Wake up Blake, you\'re a snake',
@@ -190,7 +193,8 @@ def get_restrictions(head, walls, snakes, heads, size, pm, op=True):
 	directions2 = directions
 	
 	# OPTIONAL: Be scared of the heads of others
-	for h in heads:
+	for i, h in enumerate(heads):
+		if(size[])
 		xdist = h[0]-head[0]
 		ydist = h[1]-head[1]
 		if(abs(xdist) == 1 and abs(ydist) == 1):
