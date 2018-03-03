@@ -47,7 +47,7 @@ def move():
     add_walls(walls, head)
     move = get_move(health, walls, head)
     previousMove = move
-    print move
+    print (move, previousMove)
     return {
         'move': move,
         'taunt': 'It\'s Blake the Snake!'
