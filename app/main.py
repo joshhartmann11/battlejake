@@ -6,6 +6,15 @@ grid = [[0]*5]*5
 
 previousMove = 'none'
 
+scenarios = [
+	{'scene':	[[0,0,0,0,0,0,0],
+	 			 [0,0,0,0,0,0,0],
+	 			 [0,0,0,0,0,0,0],
+	 			 [0,0,0,0,0,0,0],
+	 			 [0,0,0,0,0,0,0],
+	 			 [0,0,0,0,0,0,0]], 'move': 'left'}
+]
+
 @bottle.route('/')
 def static():
 	return "the server is running"
@@ -88,7 +97,7 @@ def get_restrictions(head, walls, snakes):
 	# Don't hit other snakes
 	
 	
-	moves = [d for k in enumerate(directions.keys()) if directions[k] is 0]
+	moves = [d for k in directions.keys() if directions[k] is 0]
 	
 	return moves
 	
