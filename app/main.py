@@ -75,16 +75,11 @@ def move():
 		print 'Food Found!'
 		taunt = 'FF, Mvs: ' + str(moves)
 	
-	# Validate move using next next move options
-	if(move == 'left'):
-		nextHead = (head[0] - 1, head[1])
-	elif(move == 'right'):
-		nextHead = (head[0] + 1, head[1])
-	elif(move == 'up'):
-		nextHead = (head[0], head[1] - 1)
-	else:
-		nextHead = (head[0], head[1] + 1)
-		
+	# Find the next position of the head given the move
+	nextHead = get_future_head(head, move)
+	
+	# If that move results in no more options for the next turn, chose another
+	# If you get a value error here it doesn't matter anyways
 	if(get_restrictions(nextHead, walls, snakes, heads, move, op=False) == []):
 		moves.remove('move')
 		if(moves == []):
@@ -94,7 +89,6 @@ def move():
 		taunt = 'Fnd Trp! Mvs: ' + str(moves)
 		
 		
-		
 	print 'move: ', move
 	print '------------------------------------------------------'
 	
@@ -102,6 +96,16 @@ def move():
 		'move': move,
 		'taunt': taunt
 	}
+
+def get_future_head(head, move):
+	if(move == 'left'):
+		return (head[0] - 1, head[1])
+	elif(move == 'right'):
+		return (head[0] + 1, head[1])
+	elif(move == 'up'):
+		return (head[0], head[1] - 1)
+	else:
+		return (head[0], head[1] + 1)
 
 
 def get_previous_move(head, second):
