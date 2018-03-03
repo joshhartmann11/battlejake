@@ -71,9 +71,11 @@ def move():
 	
 	# 					head, 	walls, 	snakes, heads, size, pm
 	moves = get_restrictions(head, mySize, walls, snakes, heads, size)
-	move = kill_others(head, mySize, heady, size, moves)
+	move = kill_others(head, mySize, heads, size, moves)
 	if(move == None):
 		move = get_food(moves, head, food)
+	if(move == None):
+		move = flee_wall(moves, walls, head)
 	
 	print 'moves: ', moves
 	
@@ -134,6 +136,16 @@ def get_future_head(head, move):
 #			return 'right'
 #		else:
 #			return 'left'
+
+def flee_wall(moves, walls, head):
+	if(head[0] == walls[0]-1 and 'left' in moves):
+		return 'left'
+	elif(head[0] == 0 and 'right' in moves):
+		return 'right'
+	if(head[1] == 0 and 'down' in moves):
+		return 'down'
+	elif(head[1] == walls[1]-1 and 'up' in moves):
+		return up
 
 
 def kill_others(head, mySize, heads, size, moves):
