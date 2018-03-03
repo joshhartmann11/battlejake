@@ -65,6 +65,7 @@ def move():
 	snakes = snakes2
 	food = data.get('food')['data']
 	food = [(f['x'], f['y']) for f in food]
+	pm = previous_move(head, (body[1]['x'], body[1]['y']))
 	
 	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
 	print "Size: ", size
@@ -125,17 +126,17 @@ def get_future_head(head, move):
 		return (head[0], head[1] + 1)
 
 
-#def get_previous_move(head, second):
-#	if(head[0] == second[0]):
-#		if(head[1] > second[1]):
-#			return 'down'
-#		else:
-#			return 'up'
-#	else:
-#		if(head[0] > second[0]):
-#			return 'right'
-#		else:
-#			return 'left'
+def get_previous_move(head, second):
+	if(head[0] == second[0]):
+		if(head[1] > second[1]):
+			return 'down'
+		else:
+			return 'up'
+	else:
+		if(head[0] > second[0]):
+			return 'right'
+		else:
+			return 'left'
 
 def flee_wall(moves, walls, head):
 	if(head[0] == walls[0]-1 and 'left' in moves):
