@@ -17,14 +17,10 @@ def static(path):
 
 @bottle.post('/start')
 def start():
-	data = bottle.request.json
-	
-	gameId = data.get('game_id')
-	boardWidth = data.get('width')
-	boardHeight = data.get('height')
 	
 	global previousMove
 	previousMove = 'up'
+	
 	headUrl = '%s://%s/static/head.png' % (
 		bottle.request.urlparts.scheme,
 		bottle.request.urlparts.netloc
