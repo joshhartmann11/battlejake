@@ -2,31 +2,6 @@ import bottle
 import os
 import random
 
-'''
-0 nothing
-1 wall
-2 snake
-3 head
-4 food
-5 anything (except food or nothing)
-'''
-
-scenarios6x6 = [
-	{'scene':	[[0,0,0,0,0,0,0],
-	 			 [0,0,0,0,0,0,0],
-	 			 [0,0,0,0,0,0,0],
-	 			 [0,0,0,0,0,0,0],
-	 			 [0,0,0,0,0,0,0],
-	 			 [0,0,0,0,0,0,0]], 'move': 'left'}
-]
-
-scenarios4x4 = [
-	{'scene':	[[5,5,0,5,5],
-	 			 [5,5,0,5,5],
-	 			 [5,0,0,5,5],
-	 			 [5,5,5,5,5]], 'move': 'left'}
-]
-
 @bottle.route('/')
 def static():
 	return "the server is running"
@@ -55,7 +30,6 @@ def start():
 @bottle.post('/move')
 def move():
 	
-	
 	data = bottle.request.json
 	
 	you = data.get('you')
@@ -63,7 +37,7 @@ def move():
 	body = you['body']['data']
 	head = (body[0]['x'], body[0]['y'])
 	walls = (data.get('width'), data.get('height'))
-	food = [(x,y) for x, y in zip(f['x'] for f in data['food']['data'], f['y'] for f in data['food']['data']['x'])]
+	food = [(x,y) for x, y in zip([f['x'] for f in data['food']['data']], [f['y'] for f in data['food']['data']['x']])]
 	
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	moves = get_restrictions(head, walls, None, pm)
@@ -139,9 +113,6 @@ def solve_6x6_moves():
 
 def solve_4x4_moves():
 	pass
-
-
-
 
 
 # Expose WSGI app (so gunicorn can find it)
