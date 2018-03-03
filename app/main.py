@@ -51,8 +51,10 @@ def move():
 	snakes = [s['body']['data'] for s in snakes]
 	snakes2 = []
 	heads = []
+	size = []
 	for s1 in snakes:
 		heads.append((s1[0]['x'], s1[0]['x']))
+		size.append(s1['length'])
 		for s2 in s1:
 			snakes2.append((s2['x'], s2['y']))
 	snakes = snakes2
@@ -60,9 +62,10 @@ def move():
 	food = [(f['x'], f['y']) for f in food]
 	
 	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
+	print "Size: ", size
 	
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
-	moves = get_restrictions(head, walls, snakes, heads, pm)
+	moves = get_restrictions(head, walls, snakes, heads, size, pm)
 	move = get_food(moves, head, food)
 	print "previousMove: " + pm
 	print 'moves: ', moves
@@ -83,7 +86,7 @@ def move():
 	
 	# If that move results in no more options for the next turn, chose another
 	# If you get a value error here it doesn't matter anyways
-	if(get_restrictions(nextHead, walls, snakes, heads, move, op=False) == []):
+	if(get_restrictions(nextHead, walls, snakes, size, size, move, op=False) == []):
 		moves.remove('move')
 		if(moves != []):
 			move = random.choice(moves)
@@ -140,7 +143,7 @@ def get_food(moves, head, food):
 	return None
 				
 
-def get_restrictions(head, walls, snakes, heads, pm, op=True):
+def get_restrictions(head, walls, snakes, heads, size, pm, op=True):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
