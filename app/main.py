@@ -21,7 +21,7 @@ def start():
 	)
 	
 	return {
-		'color': '#00FF00',
+		'color': '#AAAA55',
 		'taunt': 'Wake up Blake, you\'re a snake',
 		'head_url': headUrl
 	}
@@ -37,7 +37,11 @@ def move():
 	body = you['body']['data']
 	head = (body[0]['x'], body[0]['y'])
 	walls = (data.get('width'), data.get('height'))
-	#food = [(x,y) for x, y in zip([f['x'] for f in data['food']['data']], [f['y'] for f in data['food']['data']['x']])]
+	snakes = data['snakes']['data']
+	snakes = [s['body']['data'] for s in snakes]
+	snakesY = [s['y'] for s in snakes]
+	snakesX = [s['x'] for s in snakes]
+	snakes = [(x, y) for x, y in zip(snakesX, snakesY)]
 	
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	moves = get_restrictions(head, walls, None, pm)
@@ -50,6 +54,8 @@ def move():
 			move = pm
 		else:
 			move = random.choice(moves)
+	
+	print 'move: ', move
 	
 	return {
 		'move': move,
