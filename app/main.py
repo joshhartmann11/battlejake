@@ -95,7 +95,7 @@ def move():
 	# If that move results in no more options for the next turn, chose another
 	# If you get a value error here it doesn't matter anyways
 	# 					head, 	walls, 	snakes, heads, size, pm
-	if(get_restrictions(nextHead, mySize, walls, snakes, heads, size, op=True) == []):
+	if(get_restrictions(nextHead, mySize, walls, snakes, heads, size, op=False) == []):
 		
 		if(moves != []):
 			moves.remove('move')
@@ -196,7 +196,7 @@ def get_food(moves, head, food):
 	return None
 				
 
-def get_restrictions(head, mySize, walls, snakes, heads, size, op=False):
+def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
@@ -245,7 +245,6 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=False):
 			ydist = h[1]-head[1]
 			if(abs(xdist) == 1 and abs(ydist) == 1):
 				print "1,1 battle scenario"
-				# Which move would put you further from his head?
 				if(xdist > 0):
 					directions['right'] = 0
 					print 'Not right'
@@ -275,6 +274,8 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=False):
 					print 'Not up'
 	
 	if(1 not in directions.values() and op):
+		directions = directions2
+	if not op:
 		directions = directions2
 	
 	moves = [k for k in directions.keys() if directions[k] is 1]
