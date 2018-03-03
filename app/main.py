@@ -58,7 +58,7 @@ def move():
 	body = you['body']['data']
 	head = (body[0]['x'], body[0]['y'])
 	walls = (data.get('width'), data.get('height'))
-	food = you['food']['data']
+	#food = [x,y for x, y in zip(you['food']['data']['x'], you['food']['data']['x'])]
 	
 	add_walls(walls, head)
 	moves = get_restrictions(head, walls, None)
@@ -79,8 +79,6 @@ def move():
 def get_restrictions(head, walls, snakes):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
-	
-	print 'previousMove2: ' + previousMove 
 	
 	# Don't go back on it's self
 	if(previousMove is 'up'):
