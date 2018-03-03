@@ -58,7 +58,7 @@ def move():
 	print 'moves: ', moves
 	
 	if(move == None):
-		if(pm in moves || moves == []):
+		if(pm in moves or moves == []):
 			move = pm
 		else:
 			move = random.choice(moves)
