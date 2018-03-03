@@ -91,25 +91,25 @@ def get_restrictions(head, walls, snakes):
 	
 	print "previousMove: " + previousMove
 	
-	# Don't go back on it's self
-	if(previousMove is 'up'):
-		directions['down'] = 0
-	elif(previousMove is 'down'):
-		directions['up'] = 0
-	elif(previousMove is 'left'):
+	# Don't hit a wall
+	if(head[0] == walls[0]):
 		directions['right'] = 0
-	elif(previousMove is 'right'):
+	elif(head[0] == 0):
 		directions['left'] = 0
+	if(head[1] == 0):
+		directions['up'] = 0
+	elif(head[1] == walls[1]):
+		directions['down'] = 0
 	
-	# Don't run into a wall
-	if(head[1] <= 0):
-		directions['down'] = 0
-	elif(head[1] >= walls[1]):
-		directions['up'] = 0
-	if(head[0] <= 0):
+	# Don't go back on yourself
+	if(previousMove == 'right'):
 		directions['left'] = 0
-	elif(head[0] >= walls[0]):
+	elif(previousMove == 'left'):
 		directions['right'] = 0
+	elif(previousMove == 'up'):
+		directions['down'] = 0
+	elif(previousMove == 'down'):
+		directions['up'] = 0
 	
 	# Don't hit other snakes
 	
