@@ -2,8 +2,6 @@ import bottle
 import os
 import random
 
-grid = [[0]*5]*5
-
 previousMove = 'none'
 
 '''
@@ -50,8 +48,6 @@ def start():
 
 @bottle.post('/move')
 def move():
-
-	global previousMove
 	
 	data = bottle.request.json
 	
@@ -62,14 +58,14 @@ def move():
 	walls = (data.get('width'), data.get('height'))
 	
 	add_walls(walls, head)
-	moves = get_restrictions(head, walls, None, previousMove)
+	moves = get_restrictions(head, walls, None)
 	print 'moves: ', moves
 	if(previousMove in moves):
 		move = previousMove
 	else:
 		move = random.choice(moves)
-	previousMove = move
-	print 'move' + move
+	global previousMove = move
+	print 'move: ' + move
 	
 	return {
 		'move': move,
@@ -77,11 +73,11 @@ def move():
 	}
 
 
-def get_restrictions(head, walls, snakes, pm):
+def get_restrictions(head, walls, snakes):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
-	print 'previousMove: ' + previousMove 
+	print 'previousMove2: ' + previousMove 
 	
 	# Don't go back on it's self
 	if(previousMove is 'up'):
