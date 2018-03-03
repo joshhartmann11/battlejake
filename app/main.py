@@ -55,13 +55,10 @@ def move():
 	print "previousMove: " + pm
 	print 'moves: ', moves
 	
-	move = solve_4x4_moves()
-	
-	if(move is None):
-		if(pm in moves):
-			move = pm
-		else:
-			move = random.choice(moves)
+	if(pm in moves):
+		move = pm
+	else:
+		move = random.choice(moves)
 	
 	print 'move: ', move
 	print '------------------------------------------------------'
@@ -148,7 +145,6 @@ def get_restrictions(head, walls, snakes, heads, pm):
 				directions['up'] = 0
 			else:
 				directions['down'] = 0
-			
 	
 	moves = [k for k in directions.keys() if directions[k] is 1]
 	
