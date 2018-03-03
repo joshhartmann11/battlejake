@@ -65,7 +65,7 @@ def move():
 	snakes = snakes2
 	food = data.get('food')['data']
 	food = [(f['x'], f['y']) for f in food]
-	pm = previous_move(head, (body[1]['x'], body[1]['y']))
+	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	
 	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
 	print "Size: ", size
