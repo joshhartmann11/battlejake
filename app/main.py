@@ -88,7 +88,7 @@ def get_restrictions(head, walls, snakes):
 	# Don't hit other snakes
 	
 	
-	moves = [d for i, d in enumerate(directions.keys()) if directions[i] is 0]
+	moves = [d for k in enumerate(directions.keys()) if directions[k] is 0]
 	
 	return moves
 	
