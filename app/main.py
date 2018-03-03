@@ -85,9 +85,7 @@ def move():
 	# If you get a value error here it doesn't matter anyways
 	if(get_restrictions(nextHead, walls, snakes, heads, move, op=False) == []):
 		moves.remove('move')
-		if(moves == []):
-			move = pm
-		else:
+		if(moves != []):
 			move = random.choice(moves)
 		taunt = 'Fnd Trp! Mvs: ' + str(moves)
 		
