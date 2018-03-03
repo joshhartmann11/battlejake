@@ -47,6 +47,7 @@ def move():
 	
 	you = data.get('you')
 	health = you["health"]
+	mySize = you['size']
 	body = you['body']['data']
 	head = (body[0]['x'], body[0]['y'])
 	walls = (data.get('width'), data.get('height'))
@@ -70,7 +71,7 @@ def move():
 	
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	# 					head, 	walls, 	snakes, heads, size, pm
-	moves = get_restrictions(head, walls, snakes, heads, size, pm)
+	moves = get_restrictions(head, mySize, walls, snakes, heads, size, pm)
 	move = get_food(moves, head, food)
 	print "previousMove: " + pm
 	print 'moves: ', moves
@@ -92,7 +93,7 @@ def move():
 	# If that move results in no more options for the next turn, chose another
 	# If you get a value error here it doesn't matter anyways
 	# 					head, 	walls, 	snakes, heads, size, pm
-	if(get_restrictions(nextHead, walls, snakes, heads, size, move, op=False) == []):
+	if(get_restrictions(nextHead, mySize, walls, snakes, heads, size, move, op=False) == []):
 		
 		if(moves != []):
 			moves.remove('move')
@@ -150,7 +151,7 @@ def get_food(moves, head, food):
 	return None
 				
 
-def get_restrictions(head, walls, snakes, heads, size, pm, op=True):
+def get_restrictions(head, mySize, walls, snakes, heads, size, pm, op=True):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
@@ -165,14 +166,14 @@ def get_restrictions(head, walls, snakes, heads, size, pm, op=True):
 		directions['down'] = 0
 	
 	# Don't go back on yourself
-	if(pm == 'right'):
-		directions['left'] = 0
-	elif(pm == 'left'):
-		directions['right'] = 0
-	elif(pm == 'up'):
-		directions['down'] = 0
-	elif(pm == 'down'):
-		directions['up'] = 0
+#	if(pm == 'right'):
+#		directions['left'] = 0
+#	elif(pm == 'left'):
+#		directions['right'] = 0
+#	elif(pm == 'up'):
+#		directions['down'] = 0
+#	elif(pm == 'down'):
+#		directions['up'] = 0
 	
 	# Don't hit other snakes
 	for s in snakes:
@@ -192,29 +193,39 @@ def get_restrictions(head, walls, snakes, heads, size, pm, op=True):
 	
 	directions2 = directions
 	
-	# OPTIONAL: Be scared of the heads of others
+	# Be scared of the heads of others if they're scary
 	for i, h in enumerate(heads):
-		xdist = h[0]-head[0]
-		ydist = h[1]-head[1]
-		if(abs(xdist) == 1 and abs(ydist) == 1):
-			# Which move would put you further from his head?
-			if(xdist > 0):
-				directions['right'] = 0
-			elif(xdist < 0):
-				directions['left'] = 0
-			if(ydist > 0):
-				directions['down'] = 0
-			elif(ydist < 0):
-				directions['up'] = 0
-		elif((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
-			if(xdist == 2):
-				directions['right'] = 0
-			elif(xdist == -2):
-				directions['left'] = 0
-			elif(ydist == 2):
-				directions['down'] = 0
-			else:
-				directions['up'] = 0
+		if(!(size[i] < mySize)):
+			xdist = h[0]-head[0]
+			ydist = h[1]-head[1]
+			if(abs(xdist) == 1 and abs(ydist) == 1):
+				# Which move would put you further from his head?
+				if(xdist > 0):
+					directions['right'] = 0
+					print 'Not right'
+				elif(xdist < 0):
+					directions['left'] = 0
+					print 'Not left'
+				if(ydist > 0):
+					directions['down'] = 0
+					print 'Not down'
+				elif(ydist < 0):
+					directions['up'] = 0
+					print 'Not up'
+					
+			elif((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
+				if(xdist == 2):
+					directions['right'] = 0
+					print 'Not right'
+				elif(xdist == -2):
+					directions['left'] = 0
+					print 'Not left'
+				elif(ydist == 2):
+					directions['down'] = 0
+					print 'Not down'
+				else:
+					directions['up'] = 0
+					print 'Not up'
 	
 	if(1 not in directions.values() and op):
 		directions = directions2
