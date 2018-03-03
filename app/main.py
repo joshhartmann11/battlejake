@@ -40,7 +40,9 @@ def move():
 	snakes = data['snakes']['data']
 	snakes = [s['body']['data'] for s in snakes]
 	snakes2 = []
+	heads = []
 	for s1 in snakes:
+		heads.append((s1[0]['x'], s1[0]['x']))
 		for s2 in s1:
 			snakes2.append((s2['x'], s2['y']))
 	snakes = snakes2
@@ -48,7 +50,7 @@ def move():
 	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
 	
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
-	moves = get_restrictions(head, walls, snakes, pm)
+	moves = get_restrictions(head, walls, snakes, heads, pm)
 	
 	print "previousMove: " + pm
 	print 'moves: ', moves
@@ -83,7 +85,7 @@ def get_previous_move(head, second):
 			return 'left'
 
 
-def get_restrictions(head, walls, snakes, pm):
+def get_restrictions(head, walls, snakes, heads, pm):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
@@ -124,18 +126,33 @@ def get_restrictions(head, walls, snakes, pm):
 					directions['up'] = 0
 				
 	# Be scared of the heads of others
-	
+	for h in heads:
+		xdist = h[0]-head[0]
+		ydist = h[1]-head[1]
+		if(abs(xdist) == 1 or abs(ydist) == 1):
+			# Which move would put you further from his head?
+			if(xdist > 0):
+				directions['left'] = 0
+			elif(xdist < 0):
+				directions['right'] = 0
+			if(ydist > 0):
+				directions['up'] = 0
+			elif(ydist < 0):
+				directions['down'] = 0
+		elif(abs(xdist) == 2 ^ abs(ydist) == 2):
+			if(xdist > 0):
+				directions['left'] = 0
+			elif(xdist < 0):
+				directions['right'] = 0
+			elif(ydist > 0):
+				directions['up'] = 0
+			else:
+				directions['down'] = 0
+			
 	
 	moves = [k for k in directions.keys() if directions[k] is 1]
 	
 	return moves
-	
-	
-def solve_6x6_moves():
-	pass
-
-def solve_4x4_moves():
-	pass
 
 
 # Expose WSGI app (so gunicorn can find it)
