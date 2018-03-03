@@ -69,11 +69,12 @@ def move():
 	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
 	print "Size: ", size
 	
-	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	# 					head, 	walls, 	snakes, heads, size, pm
-	moves = get_restrictions(head, mySize, walls, snakes, heads, size, pm)
-	move = get_food(moves, head, food)
-	print "previousMove: " + pm
+	moves = get_restrictions(head, mySize, walls, snakes, heads, size)
+	move = kill_others(head, mySize, heady, size, moves)
+	if(move == None):
+		move = get_food(moves, head, food)
+	
 	print 'moves: ', moves
 	
 	# Check to see if the snake has a preferred move
@@ -93,7 +94,7 @@ def move():
 	# If that move results in no more options for the next turn, chose another
 	# If you get a value error here it doesn't matter anyways
 	# 					head, 	walls, 	snakes, heads, size, pm
-	if(get_restrictions(nextHead, mySize, walls, snakes, heads, size, move, op=False) == []):
+	if(get_restrictions(nextHead, mySize, walls, snakes, heads, size, op=False) == []):
 		
 		if(moves != []):
 			moves.remove('move')
@@ -110,6 +111,7 @@ def move():
 		'taunt': taunt
 	}
 
+
 def get_future_head(head, move):
 	if(move == 'left'):
 		return (head[0] - 1, head[1])
@@ -121,18 +123,50 @@ def get_future_head(head, move):
 		return (head[0], head[1] + 1)
 
 
-def get_previous_move(head, second):
-	if(head[0] == second[0]):
-		if(head[1] > second[1]):
-			return 'down'
-		else:
-			return 'up'
-	else:
-		if(head[0] > second[0]):
-			return 'right'
-		else:
-			return 'left'
+#def get_previous_move(head, second):
+#	if(head[0] == second[0]):
+#		if(head[1] > second[1]):
+#			return 'down'
+#		else:
+#			return 'up'
+#	else:
+#		if(head[0] > second[0]):
+#			return 'right'
+#		else:
+#			return 'left'
 
+
+def kill_others(head, mySize, heads, size, moves):
+
+	# If you're bigger than other, kill them
+	for i, h in enumerate(heads):
+		if(size[i] < mySize):
+			xdist = h[0]-head[0]
+			ydist = h[1]-head[1]
+			if(abs(xdist) == 1 and abs(ydist) == 1):
+				# Which move would put you further from his head?
+				if(xdist > 0 and 'right' in moves):
+					return 'right'
+				elif(xdist < 0 and 'left' in moves):
+					return 'left'
+				if(ydist > 0 and 'down' in moves):
+					return 'down'
+				elif(ydist < 0 and 'up' in moves):
+					return 'up'
+				else:
+					return None
+					
+			elif((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
+				if(xdist == 2 and 'right' in moves):
+					return 'right'
+				elif(xdist == -2 and 'left' in moves):
+					return 'left'
+				elif(ydist == 2 and 'down' in moves):
+					return 'down'
+				elif('up' in moves):
+					return 'up'
+				else:
+					return None
 
 def get_food(moves, head, food):
 	val = None
@@ -151,7 +185,7 @@ def get_food(moves, head, food):
 	return None
 				
 
-def get_restrictions(head, mySize, walls, snakes, heads, size, pm, op=True):
+def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
