@@ -72,17 +72,25 @@ def move():
 	
 	# Moving restrictions
 	moves = get_restrictions(head, mySize, walls, snakes, heads, size)
-	move = kill_others(head, mySize, heads, size, moves)
+	
 	print 'moves: ', moves
 	
-	# Moving preferences
+	move = None
+	if(health < 25):
+			move = starving(moves, head, food)
+			taunt = 'ST, Mvs: ' + str(move)
+	if(move == None):
+		move = kill_others(head, mySize, heads, size, moves)
+		
 	if(move == None):
 		if(health < 50):
 			move = get_food(moves, head, food)
 			taunt = 'GF, Mvs: ' + str(move)
+		
 	if(move == None):
 		move = flee_wall(moves, walls, head)
 		taunt = 'FW, Mvs: ' + str(move)
+		
 	if(move == None):
 		if(pm in moves or moves == []):
 			move = pm
@@ -178,6 +186,24 @@ def kill_others(head, mySize, heads, size, moves):
 					return 'up'
 				else:
 					return None
+
+#FIXME
+def starving(moves, head, food):
+	val = None
+	for f in food:
+		xdist = f[0]-head[0]
+		ydist = f[1]-head[1]
+		if((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
+			if(xdist == 2 and 'right' in moves):
+				return 'right'
+			elif(xdist == -2 and 'left' in moves):
+				return'left'
+			elif(ydist == 2 and 'down' in moves):
+				return 'down'
+			elif(ydist == -2 and 'up' in moves):
+				return 'up'
+	return None
+
 
 def get_food(moves, head, food):
 	val = None
