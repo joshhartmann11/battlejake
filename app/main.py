@@ -70,9 +70,9 @@ def move():
 def get_previous_move(head, second):
 	if(head[0] == second[0]):
 		if(head[1] > second[1]):
-			return 'up'
-		else:
 			return 'down'
+		else:
+			return 'up'
 	else:
 		if(head[0] > second[0]):
 			return 'right'
