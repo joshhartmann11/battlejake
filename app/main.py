@@ -49,6 +49,8 @@ def start():
 @bottle.post('/move')
 def move():
 	
+	global previousMove
+	
 	data = bottle.request.json
 	
 	you = data.get('you')
@@ -64,7 +66,7 @@ def move():
 		move = previousMove
 	else:
 		move = random.choice(moves)
-	global previousMove = move
+	previousMove = move
 	print 'move: ' + move
 	
 	return {
