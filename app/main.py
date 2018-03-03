@@ -3,6 +3,7 @@ import os
 import random
 
 grid = [[0]*5]*5
+previousMove = 'up'
 
 @bottle.route('/')
 def static():
@@ -44,17 +45,26 @@ def move():
     head = (body[0]['x'], body[0]['y'])
     walls = (data.get('width'), data.get('height'))
     add_walls(walls, head)
-
     
-    directions = ['up', 'down', 'left', 'right']
-    direction = random.choice(directions)
     return {
-        'move': 'up',
+        'move': get_move(health, head)
     }
     
 	
-def get_move():
-	pass
+def get_move(health, head):
+	directions = ['up', 'down', 'left', 'right']
+	
+	if(head['y'] == 1):
+		directions.remove('up')
+	elif(head['y'] == walls[1]):
+		directions.remove('down')
+	
+	if(head['x'] == 1):
+		directions.remove('left')
+	elif(head['x'] == walls[0]):
+		directions.remove('right')
+		
+	return random.choice(directions)
 	
 	
 def add_walls(walls, head):
