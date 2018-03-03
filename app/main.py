@@ -43,12 +43,12 @@ def move():
 	for s1 in snakes:
 		for s2 in s1:
 			snakes2.append((s2['x'], s2['y']))
-	print snakes2
+	snakes = snakes2
 	
 	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
 	
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
-	moves = get_restrictions(head, walls, None, pm)
+	moves = get_restrictions(head, walls, snakes, pm)
 	
 	print "previousMove: " + pm
 	print 'moves: ', moves
@@ -87,8 +87,6 @@ def get_restrictions(head, walls, snakes, pm):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
-	
-	
 	# Don't hit a wall
 	if(head[0] == walls[0]-1):
 		directions['right'] = 0
@@ -110,8 +108,21 @@ def get_restrictions(head, walls, snakes, pm):
 		directions['up'] = 0
 	
 	# Don't hit other snakes
-	
-	
+	for s in snakes:
+		xdist = abs(s[0]-head[0])
+		ydist = abs(s[1]-head[1])
+		if(xdist + ydist == 1):
+			if(xdist == 1):
+				if(s[0] > head[0]):
+					directions['right'] = 0
+				else:
+					directions['left'] = 0
+			else:
+				if(s[1] > head[1]):
+					directions['down'] = 0
+				else:
+					directions['up'] = 0
+				
 	# Be scared of the heads of others
 	
 	
