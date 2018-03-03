@@ -1,6 +1,7 @@
 import bottle
 import os
 import random
+import time
 
 '''
 TODO:
@@ -36,6 +37,8 @@ def start():
 
 @bottle.post('/move')
 def move():
+	
+	t1 = time.clock()
 	
 	data = bottle.request.json
 	
@@ -90,6 +93,7 @@ def move():
 		
 		
 	print 'move: ', move
+	print 'time: ', time.clock()-t1
 	print '------------------------------------------------------'
 	
 	return {
