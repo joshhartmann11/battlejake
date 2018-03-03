@@ -271,6 +271,7 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 			
 			print (xdist, ydist)
 			print 'x heads', (head[0], h[0])
+			print 'y heads', (head[1], h[1])
 			
 			if(abs(xdist) == 1 and abs(ydist) == 1):
 				print "1,1 battle scenario"
