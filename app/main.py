@@ -1,7 +1,6 @@
 import bottle
 import os
 import random
-import astar
 
 grid = [[0]*5]*5
 
