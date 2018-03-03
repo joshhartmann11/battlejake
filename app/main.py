@@ -21,7 +21,7 @@ def start():
     boardWidth = data.get('width')
     boardHeight = data.get('height')
 
-    head_url = '%s://%s/static/head.png' % (
+    headUrl = '%s://%s/static/head.png' % (
         bottle.request.urlparts.scheme,
         bottle.request.urlparts.netloc
     )
@@ -30,8 +30,8 @@ def start():
 
     return {
         'color': '#00FF00',
-        'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
-        'head_url': head_url
+        'taunt': '{} ({}x{})'.format(gameId, boardWidth, board_Height),
+        'head_url': headUrl
     }
     
 
