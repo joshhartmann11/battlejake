@@ -45,9 +45,9 @@ def move():
     head = (body[0]['x'], body[0]['y'])
     walls = (data.get('width'), data.get('height'))
     add_walls(walls, head)
-    move = get_move(health, walls, head)
-    previousMove = move
+    move = get_move(health, walls, head) 
     print (move, previousMove)
+    previousMove = move
     return {
         'move': move,
         'taunt': 'It\'s Blake the Snake!'
