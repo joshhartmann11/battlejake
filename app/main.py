@@ -69,7 +69,7 @@ def move():
 	
 	return {
 		'move': move,
-		'taunt': 'It\'s Jake the Snake!'
+		'taunt': 'It\'s Jake, the Snake!'
 	}
 
 
@@ -100,7 +100,6 @@ def get_food(moves, head, food):
 			elif('down' in moves):
 				return 'down'
 				
-
 
 def get_restrictions(head, walls, snakes, heads, pm):
 
