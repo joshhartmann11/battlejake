@@ -194,7 +194,6 @@ def get_restrictions(head, walls, snakes, heads, size, pm, op=True):
 	
 	# OPTIONAL: Be scared of the heads of others
 	for i, h in enumerate(heads):
-		if(size[])
 		xdist = h[0]-head[0]
 		ydist = h[1]-head[1]
 		if(abs(xdist) == 1 and abs(ydist) == 1):
