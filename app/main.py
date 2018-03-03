@@ -91,7 +91,7 @@ def move():
 			move = pm
 		else:
 			move = random.choice(moves)
-		taunt = 'Mvs: ' + str(moves)
+		taunt = 'Fnd Trp! Mvs: ' + str(moves)
 		
 		
 		
