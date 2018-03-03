@@ -39,7 +39,10 @@ def move():
 	walls = (data.get('width'), data.get('height'))
 	snakes = data['snakes']['data']
 	snakes = [s['body']['data'] for s in snakes]
-	print snakes
+	snakes = [s for s in snakes]
+	#print snakes
+	
+	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
 	
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	moves = get_restrictions(head, walls, None, pm)
