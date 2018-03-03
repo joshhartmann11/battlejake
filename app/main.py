@@ -59,6 +59,7 @@ def move():
 			move = random.choice(moves)
 	
 	print 'move: ', move
+	print '------------------------------------------------------'
 	
 	return {
 		'move': move,
