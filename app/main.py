@@ -54,14 +54,14 @@ def move():
 def get_move(health, head):
 	directions = ['up', 'down', 'left', 'right']
 	
-	if(head['y'] == 1):
+	if(head[1] == 1):
 		directions.remove('up')
-	elif(head['y'] == walls[1]):
+	elif(head[1] == walls[1]):
 		directions.remove('down')
 	
-	if(head['x'] == 1):
+	if(head[0] == 1):
 		directions.remove('left')
-	elif(head['x'] == walls[0]):
+	elif(head[0] == walls[0]):
 		directions.remove('right')
 		
 	return random.choice(directions)
