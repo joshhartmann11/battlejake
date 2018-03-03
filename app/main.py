@@ -2,7 +2,6 @@ import bottle
 import os
 import random
 
-previousMove = 'none'
 direction = 2
 
 '''
@@ -10,7 +9,8 @@ direction = 2
 1 wall
 2 snake
 3 head
-4 anything
+4 food
+5 anything
 
 
 	2
@@ -20,13 +20,20 @@ direction = 2
 	4
 '''
 
-scenarios = [
+scenarios6x6 = [
 	{'scene':	[[0,0,0,0,0,0,0],
 	 			 [0,0,0,0,0,0,0],
 	 			 [0,0,0,0,0,0,0],
 	 			 [0,0,0,0,0,0,0],
 	 			 [0,0,0,0,0,0,0],
 	 			 [0,0,0,0,0,0,0]], 'move': 'left'}
+]
+
+scenarios4x4 = [
+	{'scene':	[[0,0,0,0,0],
+	 			 [0,0,0,0,0],
+	 			 [0,0,0,0,0],
+	 			 [0,0,0,0,0]], 'move': 'left'}
 ]
 
 @bottle.route('/')
@@ -66,17 +73,16 @@ def move():
 	head = (body[0]['x'], body[0]['y'])
 	walls = (data.get('width'), data.get('height'))
 	#food = [(x,y) for x, y in zip(data['food']['data']['x'], data['food']['data']['x'])]
+	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	
 	add_walls(walls, head)
-	moves = get_restrictions(head, walls, None)
+	moves = get_restrictions(head, walls, None, pm)
 	print 'moves: ', moves
-	if(previousMove in moves):
-		move = previousMove
+	if(pm in moves):
+		move = pm
 	else:
 		move = random.choice(moves)
 		
-	global previousMove
-	previousMove = move
 	
 	
 	return {
@@ -85,11 +91,24 @@ def move():
 	}
 
 
-def get_restrictions(head, walls, snakes):
+def get_previous_move(head, second):
+	if(head[0] == second[0]):
+		if(head[0] > second[0]):
+			return 'right'
+		else:
+			return 'left'
+	else:
+		if(head[1] > second[1]):
+			return 'up'
+		else:
+			return 'down'
+
+
+def get_restrictions(head, walls, snakes, heads pm):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
-	print "previousMove: " + previousMove
+	print "previousMove: " + pm
 	
 	# Don't hit a wall
 	if(head[0] == walls[0]):
@@ -102,35 +121,35 @@ def get_restrictions(head, walls, snakes):
 		directions['down'] = 0
 	
 	# Don't go back on yourself
-	if(previousMove == 'right'):
+	if(pm == 'right'):
 		directions['left'] = 0
-	elif(previousMove == 'left'):
+	elif(pm == 'left'):
 		directions['right'] = 0
-	elif(previousMove == 'up'):
+	elif(pm == 'up'):
 		directions['down'] = 0
-	elif(previousMove == 'down'):
+	elif(pm == 'down'):
 		directions['up'] = 0
 	
 	# Don't hit other snakes
+	
+	
+	# Be scared of the heads of others
+	
 	
 	moves = [k for k in directions.keys() if directions[k] is 1]
 	
 	return moves
 	
 	
-def add_walls(walls, head):
-	print head
-	
-
-def add_myself(myself, head):
+def solve_6x6_moves():
 	pass
 
 
-def add_snakes(snakes, head):
+def solve_4x4_moves():
 	pass
 
-def add_food(food, head):
-	pass
+
+
 
 
 # Expose WSGI app (so gunicorn can find it)
