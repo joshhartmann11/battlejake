@@ -80,6 +80,8 @@ def get_restrictions(head, walls, snakes):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
+	print "previousMove: " + previousMove
+	
 	# Don't go back on it's self
 	if(previousMove is 'up'):
 		directions['down'] = 0
