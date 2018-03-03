@@ -3,7 +3,7 @@ import os
 import random
 
 previousMove = 'none'
-direction = 1
+direction = 2
 
 '''
 0 nothing
@@ -58,7 +58,6 @@ def start():
 def move():
 	
 	
-	
 	data = bottle.request.json
 	
 	you = data.get('you')
@@ -66,7 +65,7 @@ def move():
 	body = you['body']['data']
 	head = (body[0]['x'], body[0]['y'])
 	walls = (data.get('width'), data.get('height'))
-	#food = [x,y for x, y in zip(you['food']['data']['x'], you['food']['data']['x'])]
+	food = [x,y for x, y in zip(data['food']['data']['x'], data['food']['data']['x'])]
 	
 	add_walls(walls, head)
 	moves = get_restrictions(head, walls, None)
@@ -75,12 +74,13 @@ def move():
 		move = previousMove
 	else:
 		move = random.choice(moves)
+		
 	global previousMove
 	previousMove = move
-	print 'move: ' + move
+	
 	
 	return {
-		'move': move,
+		'move': 'right',
 		'taunt': 'It\'s Blake the Snake!'
 	}
 
