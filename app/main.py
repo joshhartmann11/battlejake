@@ -48,12 +48,12 @@ def move():
 	head = (body[0]['x'], body[0]['y'])
 	walls = (data.get('width'), data.get('height'))
 	snakes = data['snakes']['data']
+	size = []
 	for s in snakes:
 		size.append(s['length'])
 	snakes = [s['body']['data'] for s in snakes]
 	snakes2 = []
 	heads = []
-	size = []
 	for s1 in snakes:
 		heads.append((s1[0]['x'], s1[0]['x']))
 		
