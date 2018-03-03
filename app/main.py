@@ -77,13 +77,13 @@ def get_restrictions(head, walls, snakes, pm):
 	print "previousMove: " + pm
 	
 	# Don't hit a wall
-	if(head[0] == walls[0]):
+	if(head[0] == walls[0]-1):
 		directions['right'] = 0
 	elif(head[0] == 0):
 		directions['left'] = 0
 	if(head[1] == 0):
 		directions['up'] = 0
-	elif(head[1] == walls[1]):
+	elif(head[1] == walls[1]-1):
 		directions['down'] = 0
 	
 	# Don't go back on yourself
