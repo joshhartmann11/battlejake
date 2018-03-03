@@ -2,22 +2,13 @@ import bottle
 import os
 import random
 
-direction = 2
-
 '''
 0 nothing
 1 wall
 2 snake
 3 head
 4 food
-5 anything
-
-
-	2
-
-3		1
-
-	4
+5 anything (except food or nothing)
 '''
 
 scenarios6x6 = [
@@ -30,10 +21,10 @@ scenarios6x6 = [
 ]
 
 scenarios4x4 = [
-	{'scene':	[[0,0,0,0,0],
-	 			 [0,0,0,0,0],
-	 			 [0,0,0,0,0],
-	 			 [0,0,0,0,0]], 'move': 'left'}
+	{'scene':	[[5,5,0,5,5],
+	 			 [5,5,0,5,5],
+	 			 [5,0,0,5,5],
+	 			 [5,5,5,5,5]], 'move': 'left'}
 ]
 
 @bottle.route('/')
@@ -72,18 +63,19 @@ def move():
 	body = you['body']['data']
 	head = (body[0]['x'], body[0]['y'])
 	walls = (data.get('width'), data.get('height'))
-	#food = [(x,y) for x, y in zip(data['food']['data']['x'], data['food']['data']['x'])]
-	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
+	food = [(x,y) for x, y in zip(f['x'] for f in data['food']['data'], f['y'] for f in data['food']['data']['x'])]
 	
-	add_walls(walls, head)
+	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	moves = get_restrictions(head, walls, None, pm)
 	print 'moves: ', moves
-	if(pm in moves):
-		move = pm
-	else:
-		move = random.choice(moves)
-		
 	
+	move = solve_4x4_moves()
+	
+	if(move is None):
+		if(pm in moves):
+			move = pm
+		else:
+			move = random.choice(moves)
 	
 	return {
 		'move': move,
