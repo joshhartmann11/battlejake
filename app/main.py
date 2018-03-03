@@ -58,6 +58,7 @@ def move():
 	body = you['body']['data']
 	head = (body[0]['x'], body[0]['y'])
 	walls = (data.get('width'), data.get('height'))
+	food = you['food']['data']
 	
 	add_walls(walls, head)
 	moves = get_restrictions(head, walls, None)
@@ -103,8 +104,7 @@ def get_restrictions(head, walls, snakes):
 	
 	# Don't hit other snakes
 	
-	
-	moves = [k for k in directions.keys() if directions[k] is 0]
+	moves = [k for k in directions.keys() if directions[k] is 1]
 	
 	return moves
 	
