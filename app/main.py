@@ -45,7 +45,7 @@ def move():
 	walls = (data.get('width'), data.get('height'))
 	
 	add_walls(walls, head)
-	moves = get_move(head, walls, snakes)
+	moves = get_restrictions(head, walls, None)
 	print 'moves: ', moves
 	if(previousMove in moves):
 		move = previousMoves
