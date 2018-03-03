@@ -4,7 +4,7 @@ import random
 
 grid = [[0]*5]*5
 
-previousMove = 'up'
+previousMove = 'none'
 
 @bottle.route('/')
 def static():
@@ -34,7 +34,7 @@ def start():
 @bottle.post('/move')
 def move():
 
-	
+	global previousMove
 	
 	data = bottle.request.json
 	
@@ -46,11 +46,8 @@ def move():
 	
 	add_walls(walls, head)
 	move = get_move(health, walls, head)
-	
-	print (move, previousMove)
-	
-	global previousMove
 	previousMove = move
+	print (move, previousMove)
 	
 	return {
 		'move': move,
