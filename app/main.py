@@ -262,6 +262,7 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 	
 	# Be scared of the heads of others if they're scary
 	for i, h in enumerate(heads):
+	
 		if(not (size[i] < mySize)):
 			#xdist = head[0]-h[0]
 			#ydist = head[1]-h[1]			
@@ -269,6 +270,7 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 			ydist = h[1]-head[1]
 			
 			print (xdist, ydist)
+			print 'x heads', (head[0], h[0])
 			
 			if(abs(xdist) == 1 and abs(ydist) == 1):
 				print "1,1 battle scenario"
