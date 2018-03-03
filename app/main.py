@@ -114,7 +114,6 @@ def get_restrictions(head, walls, snakes, pm):
 def solve_6x6_moves():
 	pass
 
-
 def solve_4x4_moves():
 	pass
 
