@@ -65,7 +65,7 @@ def move():
 	body = you['body']['data']
 	head = (body[0]['x'], body[0]['y'])
 	walls = (data.get('width'), data.get('height'))
-	food = [x,y for x, y in zip(data['food']['data']['x'], data['food']['data']['x'])]
+	food = [(x,y) for x, y in zip(data['food']['data']['x'], data['food']['data']['x'])]
 	
 	add_walls(walls, head)
 	moves = get_restrictions(head, walls, None)
