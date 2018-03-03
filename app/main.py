@@ -95,7 +95,7 @@ def move():
 	# If that move results in no more options for the next turn, chose another
 	# If you get a value error here it doesn't matter anyways
 	# 					head, 	walls, 	snakes, heads, size, pm
-	if(get_restrictions(nextHead, mySize, walls, snakes, heads, size, op=False) == []):
+	if(get_restrictions(nextHead, mySize, walls, snakes, heads, size, op=True) == []):
 		
 		if(moves != []):
 			moves.remove('move')
@@ -196,7 +196,7 @@ def get_food(moves, head, food):
 	return None
 				
 
-def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
+def get_restrictions(head, mySize, walls, snakes, heads, size, op=False):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
