@@ -1,10 +1,10 @@
 import bottle
 import os
 import random
-import numpy as np
+import Numpy as np
 import astar
 
-grid = numpy.zeros(5, 5)
+grid = np.zeros(5, 5)
 
 @bottle.route('/')
 def static():
