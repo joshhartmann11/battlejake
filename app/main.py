@@ -60,26 +60,33 @@ def move():
 
 def get_move(health, walls, head):
 	directions = ['up', 'down', 'left', 'right']
+	up = 0
+	down = 1
+	left = 2
+	right = 3
+	remove = [0,0,0,0]
 	global previousMove
 	if(previousMove is 'up'):
-		directions.remove('down')
+		remove[down] = 1
 	elif(previousMove is 'down'):
-		directions.remove('up')
+		remove[up] = 1
 	elif(previousMove is 'left'):
-		directions.remove('right')
+		remove[right] = 1
 	elif(previousMove is 'right'):
-		directions.remove('left')
+		remove[left] = 1
 		
 	if(head[1] <= 1):
-		directions.remove('up')
+		remove[down] = 1
 	elif(head[1] >= (walls[1]-1)):
-		directions.remove('down')
+		remove[up] = 1
 		
 	if(head[0] <= 1):
-		directions.remove('left')
+		remove[left] = 1
 	elif(head[0] >= (walls[0]-1)):
-		directions.remove('right')
-		
+		remove[right] = 1
+	
+	directions = [d for d, i in enumerate(directions) if remove[i] is 1]
+	
 	if(previousMove in directions):
 		return previousMove
 	else:
