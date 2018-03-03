@@ -56,14 +56,23 @@ def move():
 def get_move(health, walls, head):
 	directions = ['up', 'down', 'left', 'right']
 	
+	if(previousMove == 'up'):
+		directions.remove('down')
+	elif(previousMove == 'down'):
+		directions.remove('up')
+	elif(previousMove == 'left'):
+		directions.remove('right'):
+	elif(previousMove == 'right'):
+		directions.remove('left')
+	
 	if(head[1] <= 1):
 		directions.remove('up')
-	elif(head[1] >= walls[1]):
+	elif(head[1] >= (walls[1]-1)):
 		directions.remove('down')
 	
 	if(head[0] <= 1):
 		directions.remove('left')
-	elif(head[0] >= walls[0]):
+	elif(head[0] >= (walls[0]-1)):
 		directions.remove('right')
 	
 	if(previousMove in directions):
