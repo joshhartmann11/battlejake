@@ -4,6 +4,7 @@ import random
 
 grid = [[0]*5]*5
 
+global previousMove
 
 @bottle.route('/')
 def static():
@@ -65,7 +66,9 @@ def get_move(health, walls, head):
 	left = 2
 	right = 3
 	remove = [0,0,0,0]
+	
 	global previousMove
+	
 	if(previousMove is 'up'):
 		remove[down] = 1
 	elif(previousMove is 'down'):
@@ -85,7 +88,7 @@ def get_move(health, walls, head):
 	elif(head[0] >= (walls[0]-1)):
 		remove[right] = 1
 	
-	directions = [d for d, i in enumerate(directions) if remove[i] is 1]
+	directions = [d for i, d in enumerate(directions) if remove[i] is 1]
 	
 	if(previousMove in directions):
 		return previousMove
