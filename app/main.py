@@ -61,7 +61,7 @@ def get_move(health, walls, head):
 	elif(previousMove is 'down'):
 		directions.remove('up')
 	elif(previousMove is 'left'):
-		directions.remove('right'):
+		directions.remove('right')
 	elif(previousMove is 'right'):
 		directions.remove('left')
 	
