@@ -6,7 +6,6 @@ import random
 TODO:
 Take preference away from the walls
 Got Time? Implement future move validation, make sure the second move has at least one option
-Figure out why mr jake wont eat the food
 '''
 
 @bottle.route('/')
@@ -28,7 +27,7 @@ def start():
 	)
 	
 	return {
-		'color': '#AAAA55',
+		'color': '#99FFFF',
 		'taunt': 'Wake up Blake, you\'re a snake',
 		'head_url': headUrl
 	}
@@ -69,6 +68,7 @@ def move():
 			move = pm
 		else:
 			move = random.choice(moves)
+		taunt = 'Mvs: ' + str(moves)
 	else:
 		print 'Food Found!'
 		taunt = 'FF, Mvs: ' + str(moves)
@@ -78,7 +78,7 @@ def move():
 	
 	return {
 		'move': move,
-		'taunt': 'It\'s Jake, the Snake!'
+		'taunt': taunt
 	}
 
 
