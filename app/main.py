@@ -6,6 +6,14 @@ grid = [[0]*5]*5
 
 previousMove = 'none'
 
+'''
+0 nothing
+1 wall
+2 snake
+3 head
+4 anything
+'''
+
 scenarios = [
 	{'scene':	[[0,0,0,0,0,0,0],
 	 			 [0,0,0,0,0,0,0],
@@ -35,7 +43,7 @@ def start():
 	
 	return {
 		'color': '#00FF00',
-		'taunt': '{} ({}x{})',
+		'taunt': 'Wake up Blake, you\'re a snake',
 		'head_url': headUrl
 	}
 
@@ -54,10 +62,10 @@ def move():
 	walls = (data.get('width'), data.get('height'))
 	
 	add_walls(walls, head)
-	moves = get_restrictions(head, walls, None)
+	moves = get_restrictions(head, walls, None, previousMove)
 	print 'moves: ', moves
 	if(previousMove in moves):
-		move = previousMoves
+		move = previousMove
 	else:
 		move = random.choice(moves)
 	previousMove = move
@@ -69,7 +77,8 @@ def move():
 	}
 
 
-def get_restrictions(head, walls, snakes):
+def get_restrictions(head, walls, snakes, pm):
+
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
 	print 'previousMove: ' + previousMove 
