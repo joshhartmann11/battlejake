@@ -3,7 +3,7 @@ import os
 import random
 
 grid = [[0]*5]*5
-previousMove = 'up'
+
 
 @bottle.route('/')
 def static():
@@ -21,7 +21,7 @@ def start():
     gameId = data.get('game_id')
     boardWidth = data.get('width')
     boardHeight = data.get('height')
-
+	global previousMove = 'up'
     headUrl = '%s://%s/static/head.png' % (
         bottle.request.urlparts.scheme,
         bottle.request.urlparts.netloc
@@ -56,7 +56,7 @@ def move():
 	
 def get_move(health, walls, head):
 	directions = ['up', 'down', 'left', 'right']
-	
+	global previousMove
 	if(previousMove is 'up'):
 		directions.remove('down')
 	elif(previousMove is 'down'):
