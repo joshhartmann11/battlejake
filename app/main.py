@@ -5,6 +5,7 @@ import random
 '''
 TODO:
 Take preference away from the walls
+Change the collision work
 Got Time? Implement future move validation, make sure the second move has at least one option
 '''
 
@@ -100,15 +101,15 @@ def get_food(moves, head, food):
 	for f in food:
 		xdist = f[0]-head[0]
 		ydist = f[1]-head[1]
-		if(abs(xdist) == 1 ^ abs(ydist) == 1):
+		if((abs(xdist) == 1 and ydist == 0) ^ (abs(ydist) == 1 and xdist == 0)):
 			if(xdist == 1):
 				val = 'right'
 			elif(xdist == -1):
 				val = 'left'
 			elif(ydist == 1):
-				val = 'up'
-			elif(ydist == -1):
 				val = 'down'
+			elif(ydist == -1):
+				val = 'up'
 	if val in moves:
 		return val
 	else:
