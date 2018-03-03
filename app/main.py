@@ -51,14 +51,15 @@ def move():
 	
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	moves = get_restrictions(head, walls, snakes, heads, pm)
-	
+	move = get_food(moves)
 	print "previousMove: " + pm
 	print 'moves: ', moves
 	
-	if(pm in moves):
-		move = pm
-	else:
-		move = random.choice(moves)
+	if(move = None):
+		if(pm in moves || moves = []):
+			move = pm
+		else:
+			move = random.choice(moves)
 	
 	print 'move: ', move
 	print '------------------------------------------------------'
@@ -80,6 +81,10 @@ def get_previous_move(head, second):
 			return 'right'
 		else:
 			return 'left'
+
+
+def get_food(food):
+	pass
 
 
 def get_restrictions(head, walls, snakes, heads, pm):
