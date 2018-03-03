@@ -64,6 +64,7 @@ def move():
 	print "previousMove: " + pm
 	print 'moves: ', moves
 	
+	# Check to see if the snake has a preferred move
 	if(move == None):
 		if(pm in moves or moves == []):
 			move = pm
@@ -73,6 +74,26 @@ def move():
 	else:
 		print 'Food Found!'
 		taunt = 'FF, Mvs: ' + str(moves)
+	
+	# Validate move using next next move options
+	if(move == 'left'):
+		nextHead = (head[0] - 1, head[1])
+	elif(move == 'right'):
+		nextHead = (head[0] + 1, head[1])
+	elif(move == 'up'):
+		nextHead = (head[0], head[1] - 1)
+	else:
+		nextHead = (head[0], head[1] + 1)
+		
+	if(get_restrictions(nextHead, walls, snakes, heads, move, op=False) == []):
+		moves.remove('move')
+		if(moves == []):
+			move = pm
+		else:
+			move = random.choice(moves)
+		taunt = 'Mvs: ' + str(moves)
+		
+		
 		
 	print 'move: ', move
 	print '------------------------------------------------------'
@@ -102,21 +123,18 @@ def get_food(moves, head, food):
 		xdist = f[0]-head[0]
 		ydist = f[1]-head[1]
 		if((abs(xdist) == 1 and ydist == 0) ^ (abs(ydist) == 1 and xdist == 0)):
-			if(xdist == 1):
-				val = 'right'
-			elif(xdist == -1):
-				val = 'left'
-			elif(ydist == 1):
-				val = 'down'
-			elif(ydist == -1):
-				val = 'up'
-	if val in moves:
-		return val
-	else:
-		return None
+			if(xdist == 1 and 'right' in moves):
+				return 'right'
+			elif(xdist == -1 and 'left' in moves):
+				return'left'
+			elif(ydist == 1 and 'down' in moves):
+				return 'down'
+			elif(ydist == -1 and 'up' in moves):
+				return 'up'
+	return None
 				
 
-def get_restrictions(head, walls, snakes, heads, pm):
+def get_restrictions(head, walls, snakes, heads, pm, op=True):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
@@ -182,7 +200,7 @@ def get_restrictions(head, walls, snakes, heads, pm):
 			else:
 				directions['down'] = 0
 	
-	if(1 not in directions.values()):
+	if(1 not in directions.values() and op):
 		directions = directions2
 	
 	moves = [k for k in directions.keys() if directions[k] is 1]
