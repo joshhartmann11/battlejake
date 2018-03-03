@@ -17,12 +17,15 @@ def static(path):
 
 @bottle.post('/start')
 def start():
-    data = bottle.request.json
-    gameId = data.get('game_id')
+	data = bottle.request.json
+	
+	gameId = data.get('game_id')
     boardWidth = data.get('width')
     boardHeight = data.get('height')
+    
     global previousMove
     previousMove = 'up'
+    
     headUrl = '%s://%s/static/head.png' % (
         bottle.request.urlparts.scheme,
         bottle.request.urlparts.netloc
@@ -41,17 +44,21 @@ def start():
 def move():
 
 	global previousMove
-
-    data = bottle.request.json
+	
+	data = bottle.request.json
+	
     you = data.get('you')
     health = you["health"]
     body = you['body']['data']
     head = (body[0]['x'], body[0]['y'])
     walls = (data.get('width'), data.get('height'))
+    
     add_walls(walls, head)
     move = get_move(health, walls, head) 
+    
     print (move, previousMove)
     previousMove = move
+    
     return {
         'move': move,
         'taunt': 'It\'s Blake the Snake!'
