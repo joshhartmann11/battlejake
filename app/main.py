@@ -57,8 +57,8 @@ def move():
 	print "previousMove: " + pm
 	print 'moves: ', moves
 	
-	if(move = None):
-		if(pm in moves || moves = []):
+	if(move == None):
+		if(pm in moves || moves == []):
 			move = pm
 		else:
 			move = random.choice(moves)
