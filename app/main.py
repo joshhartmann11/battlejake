@@ -31,7 +31,7 @@ def start():
 
     return {
         'color': '#00FF00',
-        'taunt': '{} ({}x{})'.format(gameId, boardWidth, board_Height),
+        'taunt': '{} ({}x{})'.format(gameId, boardWidth, boardHeight),
         'head_url': headUrl
     }
     
