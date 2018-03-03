@@ -39,7 +39,11 @@ def move():
 	walls = (data.get('width'), data.get('height'))
 	snakes = data['snakes']['data']
 	snakes = [s['body']['data'] for s in snakes]
-	print snakes
+	snakes2 = []
+	for s1 in snakes:
+		for s2 in s1:
+			snakes2.append((s2['x'], s2['y']))
+	print snakes2
 	
 	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
 	
