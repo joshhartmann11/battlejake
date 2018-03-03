@@ -3,6 +3,7 @@ import os
 import random
 
 previousMove = 'none'
+direction = 1
 
 '''
 0 nothing
@@ -10,6 +11,13 @@ previousMove = 'none'
 2 snake
 3 head
 4 anything
+
+
+	2
+
+3		1
+
+	4
 '''
 
 scenarios = [
@@ -49,7 +57,7 @@ def start():
 @bottle.post('/move')
 def move():
 	
-	global previousMove
+	
 	
 	data = bottle.request.json
 	
@@ -67,6 +75,7 @@ def move():
 		move = previousMove
 	else:
 		move = random.choice(moves)
+	global previousMove
 	previousMove = move
 	print 'move: ' + move
 	
