@@ -46,12 +46,14 @@ def move():
 		for s2 in s1:
 			snakes2.append((s2['x'], s2['y']))
 	snakes = snakes2
+	food = data.get('food')['data']
+	food = [(f['x'], f['y']) for f in food]
 	
 	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
 	
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	moves = get_restrictions(head, walls, snakes, heads, pm)
-	move = get_food(moves)
+	move = get_food(moves, head, food)
 	print "previousMove: " + pm
 	print 'moves: ', moves
 	
@@ -83,8 +85,20 @@ def get_previous_move(head, second):
 			return 'left'
 
 
-def get_food(food):
-	pass
+def get_food(moves, head, food):
+	for f in food:
+		xdist = abs(f[0]-head[0])
+		ydist = abs(f[1]-head[1])
+		if(abs(xdist) == 1 ^ abs(ydist) == 1):
+			if(xdist == 1 and 'right' in moves):
+				return 'right'
+			elif(xdist == -1 and 'left' in moves):
+				return 'left'
+			elif(ydist == 1 and 'up' in moves):
+				return 'up'
+			elif('down' in moves):
+				return 'down'
+				
 
 
 def get_restrictions(head, walls, snakes, heads, pm):
@@ -128,28 +142,28 @@ def get_restrictions(head, walls, snakes, heads, pm):
 					directions['up'] = 0
 				
 	# Be scared of the heads of others
-	for h in heads:
-		xdist = h[0]-head[0]
-		ydist = h[1]-head[1]
-		if(abs(xdist) == 1 or abs(ydist) == 1):
-			# Which move would put you further from his head?
-			if(xdist > 0):
-				directions['left'] = 0
-			elif(xdist < 0):
-				directions['right'] = 0
-			if(ydist > 0):
-				directions['up'] = 0
-			elif(ydist < 0):
-				directions['down'] = 0
-		elif(abs(xdist) == 2 ^ abs(ydist) == 2):
-			if(xdist > 0):
-				directions['left'] = 0
-			elif(xdist < 0):
-				directions['right'] = 0
-			elif(ydist > 0):
-				directions['up'] = 0
-			else:
-				directions['down'] = 0
+#	for h in heads:
+#		xdist = h[0]-head[0]
+#		ydist = h[1]-head[1]
+#		if(abs(xdist) == 1 or abs(ydist) == 1):
+#			# Which move would put you further from his head?
+#			if(xdist > 0):
+#				directions['left'] = 0
+#			elif(xdist < 0):
+#				directions['right'] = 0
+#			if(ydist > 0):
+#				directions['up'] = 0
+#			elif(ydist < 0):
+#				directions['down'] = 0
+#		elif(abs(xdist) == 2 ^ abs(ydist) == 2):
+#			if(xdist == 2):
+#				directions['left'] = 0
+#			elif(xdist == -2):
+#				directions['right'] = 0
+#			elif(ydist == 2):
+#				directions['up'] = 0
+#			else:
+#				directions['down'] = 0
 	
 	moves = [k for k in directions.keys() if directions[k] is 1]
 	
