@@ -96,7 +96,6 @@ def move():
 	# If you get a value error here it doesn't matter anyways
 	# 					head, 	walls, 	snakes, heads, size, pm
 	if(get_restrictions(nextHead, mySize, walls, snakes, heads, size, op=False) == []):
-		
 		if(moves != []):
 			moves.remove('move')
 			move = random.choice(moves)
