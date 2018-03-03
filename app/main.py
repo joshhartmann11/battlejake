@@ -156,7 +156,7 @@ def get_restrictions(head, walls, snakes, heads, pm):
 				directions['up'] = 0
 			elif(ydist < 0):
 				directions['down'] = 0
-		elif(abs(xdist) == 2 and ydist == 0 ^ abs(ydist) == 2 and xdist == 0):
+		elif((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
 			if(xdist == 2):
 				directions['left'] = 0
 			elif(xdist == -2):
