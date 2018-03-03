@@ -45,14 +45,15 @@ def move():
     head = (body[0]['x'], body[0]['y'])
     walls = (data.get('width'), data.get('height'))
     add_walls(walls, head)
-    move = get_move(health, head)
+    move = get_move(health, walls, head)
     print move
     return {
-        'move': move
+        'move': move,
+        'taunt': 'It\'s Blake the Snake!'
     }
     
 	
-def get_move(health, head):
+def get_move(health, walls, head):
 	directions = ['up', 'down', 'left', 'right']
 	
 	if(head[1] <= 1):
