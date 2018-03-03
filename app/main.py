@@ -37,7 +37,7 @@ def move():
 	body = you['body']['data']
 	head = (body[0]['x'], body[0]['y'])
 	walls = (data.get('width'), data.get('height'))
-	food = [(x,y) for x, y in zip([f['x'] for f in data['food']['data']], [f['y'] for f in data['food']['data']['x']])]
+	#food = [(x,y) for x, y in zip([f['x'] for f in data['food']['data']], [f['y'] for f in data['food']['data']['x']])]
 	
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	moves = get_restrictions(head, walls, None, pm)
@@ -53,7 +53,7 @@ def move():
 	
 	return {
 		'move': move,
-		'taunt': 'It\'s Blake the Snake!'
+		'taunt': 'It\'s Jake the Snake!'
 	}
 
 
