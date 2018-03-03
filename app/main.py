@@ -65,8 +65,11 @@ def get_move(health, walls, head):
 		directions.remove('left')
 	elif(head[0] >= walls[0]):
 		directions.remove('right')
-		
-	return random.choice(directions)
+	
+	if(previousMove in directions):
+		return previousMove
+	else:
+		return random.choice(directions)
 	
 	
 def add_walls(walls, head):
