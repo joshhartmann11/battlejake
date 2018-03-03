@@ -244,6 +244,7 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=False):
 			xdist = h[0]-head[0]
 			ydist = h[1]-head[1]
 			if(abs(xdist) == 1 and abs(ydist) == 1):
+				print "1,1 battle scenario"
 				# Which move would put you further from his head?
 				if(xdist > 0):
 					directions['right'] = 0
@@ -259,6 +260,7 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=False):
 					print 'Not up'
 					
 			elif((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
+				print "2,0 battle scenario"
 				if(xdist == 2):
 					directions['right'] = 0
 					print 'Not right'
