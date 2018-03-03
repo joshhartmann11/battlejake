@@ -199,22 +199,22 @@ def get_restrictions(head, walls, snakes, heads, size, pm, op=True):
 		if(abs(xdist) == 1 and abs(ydist) == 1):
 			# Which move would put you further from his head?
 			if(xdist > 0):
-				directions['left'] = 0
-			elif(xdist < 0):
 				directions['right'] = 0
+			elif(xdist < 0):
+				directions['left'] = 0
 			if(ydist > 0):
-				directions['up'] = 0
-			elif(ydist < 0):
 				directions['down'] = 0
+			elif(ydist < 0):
+				directions['up'] = 0
 		elif((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
 			if(xdist == 2):
-				directions['left'] = 0
-			elif(xdist == -2):
 				directions['right'] = 0
+			elif(xdist == -2):
+				directions['left'] = 0
 			elif(ydist == 2):
-				directions['up'] = 0
-			else:
 				directions['down'] = 0
+			else:
+				directions['up'] = 0
 	
 	if(1 not in directions.values() and op):
 		directions = directions2
