@@ -31,7 +31,7 @@ def start():
 
     return {
         'color': '#00FF00',
-        'taunt': '{} ({}x{})'.format(gameId, boardWidth, boardHeight),
+        'taunt': '{} ({}x{})',
         'head_url': headUrl
     }
     
@@ -56,13 +56,13 @@ def move():
 def get_move(health, walls, head):
 	directions = ['up', 'down', 'left', 'right']
 	
-	if(previousMove == 'up'):
+	if(previousMove is 'up'):
 		directions.remove('down')
-	elif(previousMove == 'down'):
+	elif(previousMove is 'down'):
 		directions.remove('up')
-	elif(previousMove == 'left'):
+	elif(previousMove is 'left'):
 		directions.remove('right'):
-	elif(previousMove == 'right'):
+	elif(previousMove is 'right'):
 		directions.remove('left')
 	
 	if(head[1] <= 1):
