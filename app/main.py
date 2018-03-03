@@ -46,12 +46,13 @@ def move():
 	
 	add_walls(walls, head)
 	moves = get_move(head, walls, snakes)
+	print 'moves: ', moves
 	if(previousMove in moves):
 		move = previousMoves
 	else:
 		move = random.choice(moves)
 	previousMove = move
-	print (move, previousMove)
+	print 'move' + move
 	
 	return {
 		'move': move,
@@ -61,6 +62,8 @@ def move():
 
 def get_restrictions(head, walls, snakes):
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
+	
+	print 'previousMove: ' + previousMove 
 	
 	# Don't go back on it's self
 	if(previousMove is 'up'):
