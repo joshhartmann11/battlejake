@@ -46,6 +46,7 @@ def move():
     walls = (data.get('width'), data.get('height'))
     add_walls(walls, head)
     move = get_move(health, walls, head)
+    previousMove = move
     print move
     return {
         'move': move,
