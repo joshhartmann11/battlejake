@@ -46,6 +46,8 @@ def move():
 	
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	moves = get_restrictions(head, walls, None, pm)
+	
+	print "previousMove: " + pm
 	print 'moves: ', moves
 	
 	move = solve_4x4_moves()
@@ -66,22 +68,22 @@ def move():
 
 def get_previous_move(head, second):
 	if(head[0] == second[0]):
-		if(head[0] > second[0]):
-			return 'right'
-		else:
-			return 'left'
-	else:
 		if(head[1] > second[1]):
 			return 'up'
 		else:
 			return 'down'
+	else:
+		if(head[0] > second[0]):
+			return 'right'
+		else:
+			return 'left'
 
 
 def get_restrictions(head, walls, snakes, pm):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
-	print "previousMove: " + pm
+	
 	
 	# Don't hit a wall
 	if(head[0] == walls[0]-1):
