@@ -45,7 +45,11 @@ def move():
 	walls = (data.get('width'), data.get('height'))
 	
 	add_walls(walls, head)
-	move = get_move(health, walls, head)
+	moves = get_move(head, walls, snakes)
+	if(previousMove in moves):
+		move = previousMoves
+	else:
+		move = random.choice(moves)
 	previousMove = move
 	print (move, previousMove)
 	
@@ -55,39 +59,35 @@ def move():
 	}
 
 
-def get_move(health, walls, head):
-	directions = ['up', 'down', 'left', 'right']
-	up = 0
-	down = 1
-	left = 2
-	right = 3
-	remove = [0,0,0,0]
+def get_restrictions(head, walls, snakes):
+	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
+	# Don't go back on it's self
 	if(previousMove is 'up'):
-		remove[down] = 1
+		directions['down'] = 0
 	elif(previousMove is 'down'):
-		remove[up] = 1
+		directions['up'] = 0
 	elif(previousMove is 'left'):
-		remove[right] = 1
+		directions['right'] = 0
 	elif(previousMove is 'right'):
-		remove[left] = 1
-		
+		directions['left'] = 0
+	
+	# Don't run into a wall
 	if(head[1] <= 1):
-		remove[down] = 1
+		directions['down'] = 0
 	elif(head[1] >= (walls[1]-1)):
-		remove[up] = 1
-		
+		directions['up'] = 0
 	if(head[0] <= 1):
-		remove[left] = 1
+		directions['left'] = 0
 	elif(head[0] >= (walls[0]-1)):
-		remove[right] = 1
+		directions['right'] = 0
 	
-	directions = [d for i, d in enumerate(directions) if remove[i] is 1]
+	# Don't hit other snakes
 	
-	if(previousMove in directions):
-		return previousMove
-	else:
-		return random.choice(directions)
+	
+	moves = [d for i, d in enumerate(directions.keys()) if directions[i] is 0]
+	
+	return moves
 	
 	
 def add_walls(walls, head):
