@@ -80,7 +80,7 @@ def move():
 	
 	
 	return {
-		'move': 'right',
+		'move': move,
 		'taunt': 'It\'s Blake the Snake!'
 	}
 
