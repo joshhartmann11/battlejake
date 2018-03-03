@@ -56,7 +56,6 @@ def move():
 	heads = []
 	for s1 in snakes:
 		heads.append((s1[0]['x'], s1[0]['x']))
-		
 		for s2 in s1:
 			snakes2.append((s2['x'], s2['y']))
 	snakes = snakes2
@@ -67,6 +66,7 @@ def move():
 	print "Size: ", size
 	
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
+	# 					head, 	walls, 	snakes, heads, size, pm
 	moves = get_restrictions(head, walls, snakes, heads, size, pm)
 	move = get_food(moves, head, food)
 	print "previousMove: " + pm
@@ -88,7 +88,8 @@ def move():
 	
 	# If that move results in no more options for the next turn, chose another
 	# If you get a value error here it doesn't matter anyways
-	if(get_restrictions(nextHead, walls, snakes, size, size, move, op=False) == []):
+	# 					head, 	walls, 	snakes, heads, size, pm
+	if(get_restrictions(nextHead, walls, snakes, heads, size, move, op=False) == []):
 		
 		if(moves != []):
 			moves.remove('move')
