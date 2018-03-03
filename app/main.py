@@ -2,6 +2,13 @@ import bottle
 import os
 import random
 
+'''
+TODO:
+Take preference away from the walls
+Got Time? Implement future move validation, make sure the second move has at least one option
+Figure out why mr jake wont eat the food
+'''
+
 @bottle.route('/')
 def static():
 	return "the server is running"
@@ -25,7 +32,7 @@ def start():
 		'taunt': 'Wake up Blake, you\'re a snake',
 		'head_url': headUrl
 	}
-
+	
 
 @bottle.post('/move')
 def move():
@@ -91,8 +98,8 @@ def get_previous_move(head, second):
 def get_food(moves, head, food):
 	val = None
 	for f in food:
-		xdist = abs(f[0]-head[0])
-		ydist = abs(f[1]-head[1])
+		xdist = f[0]-head[0]
+		ydist = f[1]-head[1]
 		if(abs(xdist) == 1 ^ abs(ydist) == 1):
 			if(xdist == 1):
 				val = 'right'
