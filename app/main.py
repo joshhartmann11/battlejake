@@ -104,7 +104,7 @@ def get_previous_move(head, second):
 			return 'down'
 
 
-def get_restrictions(head, walls, snakes, heads pm):
+def get_restrictions(head, walls, snakes, pm):
 
 	directions = {'up':1, 'down':1, 'left':1, 'right':1}
 	
