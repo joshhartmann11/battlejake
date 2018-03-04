@@ -88,7 +88,7 @@ def move():
 				if(pm in moves or moves == []):
 					move = pm
 		
-			# Make a random choice
+			# Make a random choice if there's no other preference
 			if(move == None):
 				move = random.choice(moves)
 		
@@ -100,14 +100,12 @@ def move():
 					move = None
 			
 	except:
-		move = random.choice(moves)		
-	
+		move = random.choice(moves)	
 	
 	return {
 		'move': move,
 		'taunt': 'Battle Jake!'
 	}
-
 
 def get_future_head(head, move):
 
@@ -142,16 +140,16 @@ def get_previous_move(head, second):
 
 def flee_wall(moves, walls, head):
 
-	if(head[0] == walls[0]-1 and 'left' in moves):
+	if(head[0] >= walls[0]-2 and 'left' in moves):
 		return 'left'
 		
-	elif(head[0] == 0 and 'right' in moves):
+	elif(head[0] <= 1 and 'right' in moves):
 		return 'right'
 		
-	if(head[1] == 0 and 'down' in moves):
+	if(head[1] <= 1 and 'down' in moves):
 		return 'down'
 		
-	elif(head[1] == walls[1]-1 and 'up' in moves):
+	elif(head[1] >= walls[1]-2 and 'up' in moves):
 		return 'up'
 
 
@@ -206,7 +204,7 @@ def starving(moves, head, food):
 		ydist = f[1]-head[1]
 		
 		if((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
-		
+	
 			if(xdist == 2 and 'right' in moves):
 				return 'right'
 				
@@ -263,15 +261,22 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 	for s in snakes:
 		xdist = abs(s[0]-head[0])
 		ydist = abs(s[1]-head[1])
+		
 		if(xdist + ydist == 1):
+		
 			if(xdist == 1):
+			
 				if(s[0] > head[0]):
 					directions['right'] = 0
+					
 				else:
 					directions['left'] = 0
+					
 			else:
+		
 				if(s[1] > head[1]):
 					directions['down'] = 0
+					
 				else:
 					directions['up'] = 0
 	
@@ -281,7 +286,6 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 	for i, h in enumerate(heads):
 	
 		if(not (size[i] < mySize)):
-			
 			xdist = h[0]-head[0]
 			ydist = h[1]-head[1]
 			
