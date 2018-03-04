@@ -69,19 +69,19 @@ def move():
 			# Take food as first preference if health is low
 			if(health < (45-numFood)):
 				move = starving(moves, head, food)
-		
+				
+			# Flee from a wall as preference
+			if(move == None):
+				move = flee_wall(moves, walls, head)	
+						
 			# Take killing others as preference
 			if(move == None):
 				move = kill_others(head, mySize, heads, size, moves)
-		
+				
 			# Take local food as preference if health could use a touchup
 			if(move == None):
 				if(health < (70-numFood)):
 					move = get_food(moves, head, food)
-		
-			# Flee from a wall as preference
-			if(move == None):
-				move = flee_wall(moves, walls, head)
 		
 			# Go straight as preference
 			if(move == None):
