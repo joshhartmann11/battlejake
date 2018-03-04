@@ -310,6 +310,7 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 	return moves
 
 
+
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
 
