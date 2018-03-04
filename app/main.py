@@ -28,8 +28,8 @@ def start():
 		bottle.request.urlparts.netloc
 	)
 	
-	print '*******************************************************************\n\
-			*******************************************************************'
+#	print '*******************************************************************\n\
+#			*******************************************************************'
 	
 	return {
 		'color': '#99FFFF',
@@ -67,13 +67,13 @@ def move():
 	food = [(f['x'], f['y']) for f in food]
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	
-	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
-	print "Size: ", size
+#	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
+#	print "Size: ", size
 	
 	# Moving restrictions
 	moves = get_restrictions(head, mySize, walls, snakes, heads, size)
 	
-	print 'moves: ', moves
+#	print 'moves: ', moves
 	
 	move = None
 	if(health < 25):
@@ -111,13 +111,13 @@ def move():
 		taunt = 'Fnd Trp! Mvs: ' + str(moves)
 		
 		
-	print 'move: ', move
-	print 'time: ', time.clock()-t1
-	print '------------------------------------------------------'
+#	print 'move: ', move
+#	print 'time: ', time.clock()-t1
+#	print '------------------------------------------------------'
 	
 	return {
 		'move': move,
-		'taunt': taunt
+		'taunt': 'Battle Jake!'
 	}
 
 
@@ -271,34 +271,34 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 			print 'y heads', (head[1], h[1])
 			
 			if(abs(xdist) == 1 and abs(ydist) == 1):
-				print "1,1 battle scenario"
+#				print "1,1 battle scenario"
 				if(xdist > 0):
 					directions['right'] = 0
-					print 'Not right'
+#					print 'Not right'
 				elif(xdist < 0):
 					directions['left'] = 0
-					print 'Not left'
+#					print 'Not left'
 				if(ydist > 0):
 					directions['down'] = 0
-					print 'Not down'
+#					print 'Not down'
 				elif(ydist < 0):
 					directions['up'] = 0
-					print 'Not up'
+#					print 'Not up'
 					
 			elif((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
-				print "2,0 battle scenario"
+#				print "2,0 battle scenario"
 				if(xdist == 2):
 					directions['right'] = 0
-					print 'Not right'
+#					print 'Not right'
 				elif(xdist == -2):
 					directions['left'] = 0
-					print 'Not left'
+#					print 'Not left'
 				elif(ydist == 2):
 					directions['down'] = 0
-					print 'Not down'
+#					print 'Not down'
 				else:
 					directions['up'] = 0
-					print 'Not up'
+#					print 'Not up'
 	
 	if(1 not in directions.values() and op):
 		directions = directions2
