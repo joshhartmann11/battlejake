@@ -72,32 +72,32 @@ def move():
 	
 	# Moving restrictions
 	moves = get_restrictions(head, mySize, walls, snakes, heads, size)
-	
-#	print 'moves: ', moves
-	
-	move = None
-	if(health < 25):
-			move = starving(moves, head, food)
-			taunt = 'ST, Mvs: ' + str(move)
-	if(move == None):
-		move = kill_others(head, mySize, heads, size, moves)
+	try:
+		move = None
+		if(health < 25):
+				move = starving(moves, head, food)
+				taunt = 'ST, Mvs: ' + str(move)
+		if(move == None):
+			move = kill_others(head, mySize, heads, size, moves)
+			
+		if(move == None):
+			if(health < 50):
+				move = get_food(moves, head, food)
+				taunt = 'GF, Mvs: ' + str(move)
+			
+		if(move == None):
+			move = flee_wall(moves, walls, head)
+			taunt = 'FW, Mvs: ' + str(move)
+			
+		if(move == None):
+			if(pm in moves or moves == []):
+				move = pm
+			else:
+				move = random.choice(moves)
+			taunt = 'Mvs: ' + str(moves)
+	except:
+		move = random.choice(moves)
 		
-	if(move == None):
-		if(health < 50):
-			move = get_food(moves, head, food)
-			taunt = 'GF, Mvs: ' + str(move)
-		
-	if(move == None):
-		move = flee_wall(moves, walls, head)
-		taunt = 'FW, Mvs: ' + str(move)
-		
-	if(move == None):
-		if(pm in moves or moves == []):
-			move = pm
-		else:
-			move = random.choice(moves)
-		taunt = 'Mvs: ' + str(moves)
-	
 	# Find the next position of the head given the move
 	nextHead = get_future_head(head, move)
 	
