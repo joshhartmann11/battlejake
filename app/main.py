@@ -74,14 +74,14 @@ def move():
 	moves = get_restrictions(head, mySize, walls, snakes, heads, size)
 	try:
 		move = None
-		if(health < 25):
+		if(health < 35):
 				move = starving(moves, head, food)
 				taunt = 'ST, Mvs: ' + str(move)
 		if(move == None):
 			move = kill_others(head, mySize, heads, size, moves)
 			
 		if(move == None):
-			if(health < 50):
+			if(health < 60):
 				move = get_food(moves, head, food)
 				taunt = 'GF, Mvs: ' + str(move)
 			
@@ -164,7 +164,7 @@ def kill_others(head, mySize, heads, size, moves):
 			xdist = h[0]-head[0]
 			ydist = h[1]-head[1]
 			if(abs(xdist) == 1 and abs(ydist) == 1):
-				print 'killing 1,1'
+	#			print 'killing 1,1'
 				# Which move would put you further from his head?
 				if(xdist > 0 and 'right' in moves):
 					return 'right'
@@ -178,7 +178,7 @@ def kill_others(head, mySize, heads, size, moves):
 					return None
 					
 			elif((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
-				print 'killing 2,0'
+	#			print 'killing 2,0'
 				if(xdist == 2 and 'right' in moves):
 					return 'right'
 				elif(xdist == -2 and 'left' in moves):
@@ -266,9 +266,9 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 			xdist = h[0]-head[0]
 			ydist = h[1]-head[1]
 			
-			print (xdist, ydist)
-			print 'x heads', (head[0], h[0])
-			print 'y heads', (head[1], h[1])
+		#	print (xdist, ydist)
+		#	print 'x heads', (head[0], h[0])
+		#	print 'y heads', (head[1], h[1])
 			
 			if(abs(xdist) == 1 and abs(ydist) == 1):
 #				print "1,1 battle scenario"
