@@ -140,7 +140,7 @@ def get_previous_move(head, second):
 
 def flee_wall(moves, walls, head):
 
-	if(head[0] >= walls[0]-2 and 'left' in moves):
+	if(head[0] >= walls[0]-2):
 	
 		if('left' in moves):
 			return 'left'
