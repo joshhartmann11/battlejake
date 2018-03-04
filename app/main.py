@@ -65,6 +65,7 @@ def move():
 	snakes = snakes2
 	food = data.get('food')['data']
 	food = [(f['x'], f['y']) for f in food]
+	numFood = len(food)
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	
 #	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
@@ -74,14 +75,14 @@ def move():
 	moves = get_restrictions(head, mySize, walls, snakes, heads, size)
 	try:
 		move = None
-		if(health < 35):
+		if(health < (45-numFood)):
 				move = starving(moves, head, food)
 				taunt = 'ST, Mvs: ' + str(move)
 		if(move == None):
 			move = kill_others(head, mySize, heads, size, moves)
 			
 		if(move == None):
-			if(health < 60):
+			if(health < (70-numFood)):
 				move = get_food(moves, head, food)
 				taunt = 'GF, Mvs: ' + str(move)
 			
