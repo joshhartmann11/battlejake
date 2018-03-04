@@ -141,16 +141,48 @@ def get_previous_move(head, second):
 def flee_wall(moves, walls, head):
 
 	if(head[0] >= walls[0]-2 and 'left' in moves):
-		return 'left'
+	
+		if('left' in moves):
+			return 'left'
 		
-	elif(head[0] <= 1 and 'right' in moves):
-		return 'right'
+		if('up' in moves):
+			return 'up'
+
+		if('down' in moves):
+			return 'down'
 		
-	if(head[1] <= 1 and 'down' in moves):
-		return 'down'
+	elif(head[0] <= 1):
+	
+		if('right' in moves):
+			return 'right'
+			
+		if('down' in moves):
+			return 'down'
+					
+		if('up' in moves):
+			return 'up'
 		
-	elif(head[1] >= walls[1]-2 and 'up' in moves):
-		return 'up'
+	if(head[1] <= 1):
+	
+		if('down' in moves):
+			return 'down'
+			
+		if('right' in moves):
+			return 'right'
+		
+		if('left' in moves):
+			return 'left'
+		
+	elif(head[1] >= walls[1]-2):
+	
+		if('up' in moves):
+			return 'up'
+
+		if('left' in moves):
+			return 'left'
+			
+		if('right' in moves):
+			return 'right'
 
 
 # If you're bigger than other snake, kill them
