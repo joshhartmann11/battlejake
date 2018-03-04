@@ -3,20 +3,16 @@ import os
 import random
 import time
 
-'''
-TODO:
-Take preference away from the walls
-Change the collision work
-Got Time? Implement future move validation, make sure the second move has at least one option
-'''
 
 @bottle.route('/')
 def static():
+
 	return "the server is running"
 
 
 @bottle.route('/static/<path:path>')
 def static(path):
+
 	return bottle.static_file(path, root='static/')
 
 
@@ -28,9 +24,6 @@ def start():
 		bottle.request.urlparts.netloc
 	)
 	
-#	print '*******************************************************************\n\
-#			*******************************************************************'
-	
 	return {
 		'color': '#99FFFF',
 		'taunt': 'Wake up Blake, you\'re a snake',
@@ -40,11 +33,10 @@ def start():
 
 @bottle.post('/move')
 def move():
-	taunt = 'Jake the Snake!'
-	t1 = time.clock()
 	
 	data = bottle.request.json
 	
+	# Get all the data
 	you = data.get('you')
 	health = you["health"]
 	mySize = you['length']
@@ -68,53 +60,48 @@ def move():
 	numFood = len(food)
 	pm = get_previous_move(head, (body[1]['x'], body[1]['y']))
 	
-#	print "Head: ", head, "Second: ", (body[1]['x'], body[1]['y'])
-#	print "Size: ", size
-	
 	# Moving restrictions
 	moves = get_restrictions(head, mySize, walls, snakes, heads, size)
 	try:
 		move = None
-		if(health < (45-numFood)):
+		while move == None:
+		
+			# Take food as first preference if health is low
+			if(health < (45-numFood)):
 				move = starving(moves, head, food)
-				taunt = 'ST, Mvs: ' + str(move)
-		if(move == None):
-			move = kill_others(head, mySize, heads, size, moves)
-			
-		if(move == None):
-			if(health < (70-numFood)):
-				move = get_food(moves, head, food)
-				taunt = 'GF, Mvs: ' + str(move)
-			
-		if(move == None):
-			move = flee_wall(moves, walls, head)
-			taunt = 'FW, Mvs: ' + str(move)
-			
-		if(move == None):
-			if(pm in moves or moves == []):
-				move = pm
-			else:
+		
+			# Take killing others as preference
+			if(move == None):
+				move = kill_others(head, mySize, heads, size, moves)
+		
+			# Take local food as preference if health could use a touchup
+			if(move == None):
+				if(health < (70-numFood)):
+					move = get_food(moves, head, food)
+		
+			# Flee from a wall as preference
+			if(move == None):
+				move = flee_wall(moves, walls, head)
+		
+			# Go straight as preference
+			if(move == None):
+				if(pm in moves or moves == []):
+					move = pm
+		
+			# Make a random choice
+			if(move == None):
 				move = random.choice(moves)
-			taunt = 'Mvs: ' + str(moves)
+		
+			# If the move is going to result in future death, choose another
+			nextHead = get_future_head(head, move)
+			if(get_restrictions(nextHead, mySize, walls, snakes, heads, size, op=False) == []):
+				if(moves != []):
+					moves.remove(move)
+					move = None
+			
 	except:
-		move = random.choice(moves)
-		
-	# Find the next position of the head given the move
-	nextHead = get_future_head(head, move)
+		move = random.choice(moves)		
 	
-	# If that move results in no more options for the next turn, chose another
-	# If you get a value error here it doesn't matter anyways
-	# 					head, 	walls, 	snakes, heads, size, pm
-	if(get_restrictions(nextHead, mySize, walls, snakes, heads, size, op=False) == []):
-		if(moves != []):
-			moves.remove(move)
-			move = random.choice(moves)
-		taunt = 'Fnd Trp! Mvs: ' + str(moves)
-		
-		
-#	print 'move: ', move
-#	print 'time: ', time.clock()-t1
-#	print '------------------------------------------------------'
 	
 	return {
 		'move': move,
@@ -123,107 +110,136 @@ def move():
 
 
 def get_future_head(head, move):
+
 	if(move == 'left'):
 		return (head[0] - 1, head[1])
+		
 	elif(move == 'right'):
 		return (head[0] + 1, head[1])
+		
 	elif(move == 'up'):
 		return (head[0], head[1] - 1)
+		
 	else:
 		return (head[0], head[1] + 1)
 
 
 def get_previous_move(head, second):
+
 	if(head[0] == second[0]):
 		if(head[1] > second[1]):
 			return 'down'
+			
 		else:
 			return 'up'
 	else:
 		if(head[0] > second[0]):
 			return 'right'
+			
 		else:
 			return 'left'
 
+
 def flee_wall(moves, walls, head):
+
 	if(head[0] == walls[0]-1 and 'left' in moves):
 		return 'left'
+		
 	elif(head[0] == 0 and 'right' in moves):
 		return 'right'
+		
 	if(head[1] == 0 and 'down' in moves):
 		return 'down'
+		
 	elif(head[1] == walls[1]-1 and 'up' in moves):
 		return 'up'
 
 
+# If you're bigger than other snake, kill them
 def kill_others(head, mySize, heads, size, moves):
 
-	# If you're bigger than other, kill them
 	for i, h in enumerate(heads):
+	
 		if(size[i] < mySize):
 
 			xdist = h[0]-head[0]
 			ydist = h[1]-head[1]
+			
 			if(abs(xdist) == 1 and abs(ydist) == 1):
-	#			print 'killing 1,1'
-				# Which move would put you further from his head?
+
 				if(xdist > 0 and 'right' in moves):
 					return 'right'
+					
 				elif(xdist < 0 and 'left' in moves):
 					return 'left'
+					
 				if(ydist > 0 and 'down' in moves):
 					return 'down'
+					
 				elif(ydist < 0 and 'up' in moves):
 					return 'up'
-				else:
-					return None
 					
 			elif((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
-	#			print 'killing 2,0'
+
 				if(xdist == 2 and 'right' in moves):
 					return 'right'
+					
 				elif(xdist == -2 and 'left' in moves):
 					return 'left'
+					
 				elif(ydist == 2 and 'down' in moves):
 					return 'down'
+					
 				elif('up' in moves):
 					return 'up'
-				else:
-					return None
 
 
 def starving(moves, head, food):
-	val = None
+
+	move = get_food(moves, head, food)
+	
+	if(not (move == None)):
+		return move
+
 	for f in food:
 		xdist = f[0]-head[0]
 		ydist = f[1]-head[1]
+		
 		if((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
+		
 			if(xdist == 2 and 'right' in moves):
 				return 'right'
+				
 			elif(xdist == -2 and 'left' in moves):
 				return'left'
+				
 			elif(ydist == 2 and 'down' in moves):
 				return 'down'
+				
 			elif(ydist == -2 and 'up' in moves):
 				return 'up'
-	return None
-
+			
 
 def get_food(moves, head, food):
-	val = None
+
 	for f in food:
 		xdist = f[0]-head[0]
 		ydist = f[1]-head[1]
+		
 		if((abs(xdist) == 1 and ydist == 0) ^ (abs(ydist) == 1 and xdist == 0)):
+		
 			if(xdist == 1 and 'right' in moves):
 				return 'right'
+				
 			elif(xdist == -1 and 'left' in moves):
 				return'left'
+				
 			elif(ydist == 1 and 'down' in moves):
 				return 'down'
+				
 			elif(ydist == -1 and 'up' in moves):
 				return 'up'
-	return None
+				
 				
 
 def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
@@ -233,13 +249,15 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 	# Don't hit a wall
 	if(head[0] == walls[0]-1):
 		directions['right'] = 0
+		
 	elif(head[0] == 0):
 		directions['left'] = 0
+		
 	if(head[1] == 0):
 		directions['up'] = 0
+		
 	elif(head[1] == walls[1]-1):
 		directions['down'] = 0
-	
 	
 	# Don't hit other snakes
 	for s in snakes:
@@ -267,42 +285,38 @@ def get_restrictions(head, mySize, walls, snakes, heads, size, op=True):
 			xdist = h[0]-head[0]
 			ydist = h[1]-head[1]
 			
-		#	print (xdist, ydist)
-		#	print 'x heads', (head[0], h[0])
-		#	print 'y heads', (head[1], h[1])
-			
 			if(abs(xdist) == 1 and abs(ydist) == 1):
-#				print "1,1 battle scenario"
+
 				if(xdist > 0):
 					directions['right'] = 0
-#					print 'Not right'
+
 				elif(xdist < 0):
 					directions['left'] = 0
-#					print 'Not left'
+
 				if(ydist > 0):
 					directions['down'] = 0
-#					print 'Not down'
+
 				elif(ydist < 0):
 					directions['up'] = 0
-#					print 'Not up'
-					
+
 			elif((abs(xdist) == 2 and ydist == 0) ^ (abs(ydist) == 2 and xdist == 0)):
-#				print "2,0 battle scenario"
+
 				if(xdist == 2):
 					directions['right'] = 0
-#					print 'Not right'
+
 				elif(xdist == -2):
 					directions['left'] = 0
-#					print 'Not left'
+
 				elif(ydist == 2):
 					directions['down'] = 0
-#					print 'Not down'
+
 				else:
 					directions['up'] = 0
-#					print 'Not up'
-	
+
+	# If there's no other choice but to possibly collide with a head
 	if(1 not in directions.values() and op):
 		directions = directions2
+		
 	if not op:
 		directions = directions2
 	
