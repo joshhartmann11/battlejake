@@ -97,7 +97,8 @@ def move():
 			if(get_restrictions(nextHead, mySize, walls, snakes, heads, size, op=False) == []):
 				if(moves != []):
 					moves.remove(move)
-					move = None
+					if(move != []):
+						move = None
 			
 	except:
 		move = random.choice(moves)	
